@@ -1,7 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
+  clonePlan,
   generateItinerary,
   type PlanVisibility,
   updatePlanVisibility,
@@ -17,6 +19,7 @@ import { PackageSelector } from "./package-selector";
 const initialPackages = ["foodie", "photo", "relax"];
 
 export function ItineraryWorkspace() {
+  const router = useRouter();
   const { location } = useLocation();
   const { user, status, signIn } = useAuth();
   const [selectedPackages, setSelectedPackages] = useState(initialPackages);
@@ -28,6 +31,8 @@ export function ItineraryWorkspace() {
   );
   const [isUpdatingVisibility, setIsUpdatingVisibility] = useState(false);
   const [shareError, setShareError] = useState<string | null>(null);
+  const [isCloning, setIsCloning] = useState(false);
+  const [cloneMessage, setCloneMessage] = useState<string | null>(null);
   const generatedRequest = useRef<string | null>(null);
   const userId = user?.id;
 
@@ -51,7 +56,10 @@ export function ItineraryWorkspace() {
               }
             : { lat: location.lat, lng: location.lng }),
           packages,
-          durationDays: 2,
+          durationDays: location.durationDays,
+          ...(location.budgetMin !== undefined ? { budgetMin: location.budgetMin } : {}),
+          ...(location.budgetMax !== undefined ? { budgetMax: location.budgetMax } : {}),
+          ...(location.currency ? { currency: location.currency } : {}),
         });
         setItinerary(response);
         setPlanVisibility(response.savedPlanId ? "private" : null);
@@ -74,7 +82,7 @@ export function ItineraryWorkspace() {
       return;
     }
 
-    const requestKey = `${location.kind}:${location.label}:${userId ?? "guest"}`;
+    const requestKey = `${location.kind}:${location.label}:${location.durationDays}:${location.budgetMin ?? ""}:${location.budgetMax ?? ""}:${userId ?? "guest"}`;
     if (generatedRequest.current === requestKey) {
       return;
     }
@@ -89,6 +97,21 @@ export function ItineraryWorkspace() {
     }
 
     void generate(selectedPackages);
+  }
+
+  async function handleClone() {
+    if (!itinerary?.savedPlanId) return;
+    setIsCloning(true);
+    setCloneMessage(null);
+    try {
+      const clonedPlan = await clonePlan(itinerary.savedPlanId);
+      window.sessionStorage.setItem("planrcm_clone_notice", "Sao chép plan thành công. Bạn có thể tùy chỉnh bản riêng của mình.");
+      router.push(`/plans/${clonedPlan.id}`);
+    } catch (caughtError) {
+      setCloneMessage(caughtError instanceof Error ? caughtError.message : "Không thể sao chép plan này.");
+    } finally {
+      setIsCloning(false);
+    }
   }
 
   async function handleVisibilityChange() {
@@ -169,6 +192,8 @@ export function ItineraryWorkspace() {
             ? "Điểm đến đã chọn"
             : "Vị trí hiện tại"}
         </span>
+        <span>{location.durationDays} ngày</span>
+        {(location.budgetMin !== undefined || location.budgetMax !== undefined) && <span>Ngân sách đã chọn</span>}
         <span>
           {location.kind === "destination"
             ? location.label
@@ -277,6 +302,14 @@ export function ItineraryWorkspace() {
                 )}
               </div>
               <div className="mt-4 flex flex-wrap gap-3 sm:mt-0 sm:shrink-0">
+                <button
+                  type="button"
+                  onClick={() => void handleClone()}
+                  disabled={isCloning}
+                  className={`font-mono min-h-11 border-2 px-4 py-2 text-[10px] font-medium tracking-[0.1em] uppercase disabled:cursor-wait disabled:opacity-60 ${planVisibility === "public" ? "border-white text-white hover:bg-white hover:text-black" : "border-black hover:bg-black hover:text-white"}`}
+                >
+                  {isCloning ? "Đang sao chép..." : "Sao chép plan"}
+                </button>
                 {planVisibility === "public" && (
                   <a
                     href={`/market/${itinerary.savedPlanId}`}
@@ -298,6 +331,7 @@ export function ItineraryWorkspace() {
                       : "Chia sẻ lên Market"}
                 </button>
               </div>
+              {cloneMessage && <p role="status" className="mt-3 text-sm leading-6">{cloneMessage}</p>}
             </section>
           )}
           {isLoading && <LoadingItinerary overlay />}

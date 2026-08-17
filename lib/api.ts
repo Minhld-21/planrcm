@@ -27,6 +27,9 @@ export type GenerateItineraryRequest = {
   lng?: number;
   packages?: string[];
   durationDays?: number;
+  budgetMin?: number;
+  budgetMax?: number;
+  currency?: string;
 };
 
 export type PlanVisibility = "private" | "public";
@@ -37,6 +40,8 @@ export type SavedPlan = {
   createdAt: string;
   visibility: PlanVisibility;
   publishedAt?: string;
+  clonedFromPlanId?: string;
+  originalAuthorId?: string;
   itinerary: ItineraryResponse;
 };
 
@@ -54,6 +59,10 @@ export type PublicPlanSummary = {
   destinationLocation?: PlaceResult;
   totalDays: number;
   theme: string[];
+  durationDays?: number;
+  budgetMin?: number;
+  budgetMax?: number;
+  currency?: string;
 };
 
 export type PublicPlan = PublicPlanSummary & {
@@ -146,11 +155,26 @@ export function getMyPlans() {
   return request<SavedPlan[]>("/plans");
 }
 
+export function getPlan(planId: string) {
+  return request<SavedPlan>(`/plans/${planId}`);
+}
+
+export function updatePlan(planId: string, itinerary: ItineraryResponse) {
+  return request<SavedPlan>(`/plans/${planId}`, {
+    method: "PATCH",
+    body: JSON.stringify({ itinerary }),
+  });
+}
+
 export function updatePlanVisibility(planId: string, isPublic: boolean) {
   return request<SavedPlan>(`/plans/${planId}/visibility`, {
     method: "PATCH",
     body: JSON.stringify({ isPublic }),
   });
+}
+
+export function clonePlan(planId: string) {
+  return request<SavedPlan>(`/plans/${planId}/clone`, { method: "POST" });
 }
 
 export function getMarketPlans() {

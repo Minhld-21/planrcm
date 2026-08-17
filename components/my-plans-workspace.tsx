@@ -20,6 +20,15 @@ export function MyPlansWorkspace() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [updatingPlanId, setUpdatingPlanId] = useState<string | null>(null)
+  const [notice, setNotice] = useState<string | null>(null)
+
+  useEffect(() => {
+    const cloneNotice = window.sessionStorage.getItem('planrcm_clone_notice')
+    if (cloneNotice) {
+      setNotice(cloneNotice)
+      window.sessionStorage.removeItem('planrcm_clone_notice')
+    }
+  }, [])
 
   const loadPlans = useCallback(async () => {
     setIsLoading(true)
@@ -84,6 +93,7 @@ export function MyPlansWorkspace() {
       </header>
 
       {error && <div role="alert" className="mt-7 border-2 border-black bg-surface p-5"><p className="font-mono text-[10px] font-medium tracking-[0.12em] uppercase">Không thể cập nhật</p><p className="mt-2 leading-7">{error}</p></div>}
+      {notice && <div role="status" className="mt-7 border-2 border-black bg-black p-5 text-white"><p className="font-mono text-[10px] font-medium tracking-[0.12em] uppercase">Plan đã sẵn sàng</p><p className="mt-2 leading-7 text-white/80">{notice}</p></div>}
 
       {isLoading && <div className="grid gap-0 border-l-2 border-black md:grid-cols-2">{Array.from({ length: 4 }, (_, index) => <div key={index} className="min-h-56 border-r-2 border-b-2 border-black bg-surface p-6 animate-pulse"><div className="h-3 w-24 bg-black/15" /><div className="mt-10 h-10 max-w-64 bg-black/15" /><div className="mt-10 h-10 w-36 bg-black/15" /></div>)}</div>}
 
@@ -109,8 +119,12 @@ export function MyPlansWorkspace() {
                 </div>
                 <h2 className="font-display mt-10 text-4xl leading-[0.9] tracking-tight sm:text-5xl">{plan.itinerary.destination}</h2>
                 <p className={`font-mono mt-4 text-[10px] font-medium tracking-[0.1em] uppercase ${isPublic ? 'text-white/70' : 'text-muted'}`}>{plan.itinerary.totalDays} ngày · {plan.itinerary.theme.join(' / ') || 'Hành trình tự do'}</p>
+                {(plan.itinerary.budgetMin !== undefined || plan.itinerary.budgetMax !== undefined) && <p className={`font-mono mt-2 text-[10px] font-medium tracking-[0.1em] uppercase ${isPublic ? 'text-white/70' : 'text-muted'}`}>Ngân sách: {formatBudget(plan.itinerary.budgetMin, plan.itinerary.budgetMax, plan.itinerary.currency)}</p>}
                 <div className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-current pt-5">
-                  {isPublic ? <a href={`/market/${plan.id}`} className="font-mono min-h-11 border-b-2 border-current py-2 text-[10px] font-medium tracking-[0.1em] uppercase focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-white">Xem công khai ↗</a> : <span />}
+                  <div className="flex flex-wrap gap-4">
+                    <a href={`/plans/${plan.id}`} className="font-mono min-h-11 border-b-2 border-current py-2 text-[10px] font-medium tracking-[0.1em] uppercase focus-visible:outline-3 focus-visible:outline-offset-3">Chỉnh sửa →</a>
+                    {isPublic && <a href={`/market/${plan.id}`} className="font-mono min-h-11 border-b-2 border-current py-2 text-[10px] font-medium tracking-[0.1em] uppercase focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-white">Xem công khai ↗</a>}
+                  </div>
                   <button type="button" onClick={() => void toggleVisibility(plan)} disabled={isUpdating} className={`font-mono min-h-11 border-2 px-4 py-2 text-[10px] font-medium tracking-[0.1em] uppercase focus-visible:outline-3 focus-visible:outline-offset-3 disabled:cursor-wait disabled:opacity-60 ${isPublic ? 'border-white bg-white text-black hover:bg-black hover:text-white focus-visible:outline-white' : 'border-black bg-black text-white hover:bg-white hover:text-black focus-visible:outline-black'}`}>{isUpdating ? 'Đang cập nhật' : isPublic ? 'Gỡ khỏi Market' : 'Chia sẻ lên Market'}</button>
                 </div>
               </article>
@@ -120,4 +134,11 @@ export function MyPlansWorkspace() {
       )}
     </section>
   )
+}
+
+function formatBudget(min?: number, max?: number, currency = 'VND') {
+  const format = (value: number) => new Intl.NumberFormat('vi-VN').format(value)
+  if (min !== undefined && max !== undefined) return `${format(min)} – ${format(max)} ${currency}`
+  if (min !== undefined) return `từ ${format(min)} ${currency}`
+  return `tối đa ${format(max ?? 0)} ${currency}`
 }

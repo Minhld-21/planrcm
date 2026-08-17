@@ -1,7 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getMarketPlan, type PublicPlan } from '@/lib/api'
+import { useRouter } from 'next/navigation'
+import { clonePlan, getMarketPlan, type PublicPlan } from '@/lib/api'
+import { useAuth } from '@/context/auth-context'
 import { ItineraryTimeline } from './itinerary-timeline'
 
 function formatDate(value: string) {
@@ -19,9 +21,31 @@ export function MarketPlanDetail({
   planId: string
   initialPlan?: PublicPlan
 }) {
+  const router = useRouter()
+  const { user, status, signIn } = useAuth()
   const [plan, setPlan] = useState<PublicPlan | null>(initialPlan ?? null)
   const [isLoading, setIsLoading] = useState(initialPlan === undefined)
   const [error, setError] = useState<string | null>(null)
+  const [isCloning, setIsCloning] = useState(false)
+  const [cloneError, setCloneError] = useState<string | null>(null)
+
+  async function handleClone() {
+    if (!user) {
+      signIn(`/market/${planId}`)
+      return
+    }
+    setIsCloning(true)
+    setCloneError(null)
+    try {
+      const clonedPlan = await clonePlan(planId)
+      window.sessionStorage.setItem('planrcm_clone_notice', 'Sao chép plan thành công. Bạn có thể tùy chỉnh bản riêng của mình.')
+      router.push(`/plans/${clonedPlan.id}`)
+    } catch (caughtError) {
+      setCloneError(caughtError instanceof Error ? caughtError.message : 'Không thể sao chép plan này.')
+    } finally {
+      setIsCloning(false)
+    }
+  }
 
   useEffect(() => {
     if (initialPlan !== undefined) {
@@ -85,6 +109,10 @@ export function MarketPlanDetail({
         )}
         <p className="text-sm">Chia sẻ bởi <span className="font-medium">{plan.author.name}</span></p>
         <span className="font-mono text-[10px] font-medium tracking-[0.1em] text-muted uppercase">Đăng {formatDate(plan.publishedAt)}</span>
+        <button type="button" onClick={() => void handleClone()} disabled={isCloning || status === 'loading'} className="font-mono min-h-11 border-2 border-black bg-black px-4 py-2 text-[10px] font-medium tracking-[0.1em] text-white uppercase hover:bg-white hover:text-black disabled:cursor-wait disabled:opacity-60">
+          {isCloning ? 'Đang sao chép...' : user ? 'Sao chép plan' : 'Đăng nhập để sao chép'}
+        </button>
+        {cloneError && <p role="alert" className="w-full text-sm leading-6">{cloneError}</p>}
       </div>
       <ItineraryTimeline itinerary={plan.itinerary} eyebrow="Plan cộng đồng" />
     </section>

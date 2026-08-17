@@ -100,6 +100,13 @@ export function ItineraryTimeline({
         </div>
       </header>
 
+      {(itinerary.budgetMin !== undefined || itinerary.budgetMax !== undefined) && (
+        <div className="font-mono flex flex-wrap gap-2 border-b-2 border-black py-4 text-[10px] font-medium tracking-[0.1em] uppercase">
+          <span className="border border-black px-3 py-2">🗓 {itinerary.durationDays ?? itinerary.totalDays} ngày</span>
+          <span className="border border-black px-3 py-2">💰 {formatBudget(itinerary.budgetMin, itinerary.budgetMax, itinerary.currency)}</span>
+        </div>
+      )}
+
       <div className="flex flex-col gap-4 border-b-2 border-black py-4 sm:flex-row sm:items-center sm:justify-between sm:py-5">
         <p className="font-mono text-[10px] font-medium tracking-[0.14em] uppercase">
           {openDays.size}/{dayNumbers.length} ngày đang hiển thị
@@ -215,4 +222,11 @@ export function ItineraryTimeline({
       </div>
     </section>
   );
+}
+
+function formatBudget(min?: number, max?: number, currency = "VND") {
+  const format = (value: number) => new Intl.NumberFormat("vi-VN").format(value);
+  if (min !== undefined && max !== undefined) return `${format(min)} – ${format(max)} ${currency}`;
+  if (min !== undefined) return `Từ ${format(min)} ${currency}`;
+  return `Tối đa ${format(max ?? 0)} ${currency}`;
 }

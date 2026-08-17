@@ -13,6 +13,8 @@ export function HomeHero() {
   const { user, status, signIn, error: authError, clearError } = useAuth();
   const [destination, setDestination] = useState("");
   const [selectedPlace, setSelectedPlace] = useState<PlaceResult | null>(null);
+  const [durationDays, setDurationDays] = useState(2);
+  const [budgetRange, setBudgetRange] = useState("none");
   const [isRequesting, setIsRequesting] = useState(false);
   const [locationError, setLocationError] = useState<string | null>(null);
 
@@ -44,6 +46,8 @@ export function HomeHero() {
             googleMapsUrl: selectedPlace.googleMapsUrl,
           }
         : {}),
+      durationDays,
+      ...budgetValues(budgetRange),
     });
     router.push("/itinerary");
   }
@@ -64,6 +68,8 @@ export function HomeHero() {
           label: "Vị trí hiện tại",
           lat: position.coords.latitude,
           lng: position.coords.longitude,
+          durationDays,
+          ...budgetValues(budgetRange),
         });
         router.push("/itinerary");
       },
@@ -122,7 +128,7 @@ export function HomeHero() {
             </p>
           </div>
 
-          <div className="mt-6 grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto]">
+          <div className="mt-6 grid gap-3 lg:grid-cols-[minmax(0,1fr)_10rem_13rem_auto]">
             <PlaceAutocomplete
               id="destination"
               value={destination}
@@ -135,6 +141,31 @@ export function HomeHero() {
               placeholder="Ví dụ: Đà Lạt, Lâm Đồng"
               className="min-w-0"
             />
+            <label className="font-mono grid min-h-14 gap-1 border-2 border-black bg-white px-3 py-2 text-[9px] font-medium tracking-[0.1em] uppercase focus-within:outline-3 focus-within:outline-offset-3 focus-within:outline-black">
+              Thời gian
+              <select
+                value={durationDays}
+                onChange={(event) => setDurationDays(Number(event.target.value))}
+                className="min-w-0 bg-transparent text-xs font-semibold normal-case outline-none"
+              >
+                {[1, 2, 3, 4, 5, 6, 7].map((days) => <option key={days} value={days}>{days} ngày</option>)}
+              </select>
+            </label>
+            <label className="font-mono grid min-h-14 gap-1 border-2 border-black bg-white px-3 py-2 text-[9px] font-medium tracking-[0.1em] uppercase focus-within:outline-3 focus-within:outline-offset-3 focus-within:outline-black">
+              Ngân sách
+              <select
+                value={budgetRange}
+                onChange={(event) => setBudgetRange(event.target.value)}
+                className="min-w-0 bg-transparent text-xs font-semibold normal-case outline-none"
+              >
+                <option value="none">Chưa chọn</option>
+                <option value="under-1">Dưới 1 triệu VND</option>
+                <option value="1-3">1 – 3 triệu VND</option>
+                <option value="3-5">3 – 5 triệu VND</option>
+                <option value="5-10">5 – 10 triệu VND</option>
+                <option value="over-10">Trên 10 triệu VND</option>
+              </select>
+            </label>
             <button
               type="submit"
               className="font-mono min-h-14 border-2 border-black bg-black px-6 py-3 text-xs font-medium tracking-[0.14em] text-white uppercase hover:bg-white hover:text-black focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black"
@@ -205,4 +236,15 @@ export function HomeHero() {
       )}
     </section>
   );
+}
+
+function budgetValues(range: string) {
+  const ranges: Record<string, { budgetMin?: number; budgetMax?: number; currency?: string }> = {
+    "under-1": { budgetMax: 1_000_000, currency: "VND" },
+    "1-3": { budgetMin: 1_000_000, budgetMax: 3_000_000, currency: "VND" },
+    "3-5": { budgetMin: 3_000_000, budgetMax: 5_000_000, currency: "VND" },
+    "5-10": { budgetMin: 5_000_000, budgetMax: 10_000_000, currency: "VND" },
+    "over-10": { budgetMin: 10_000_000, currency: "VND" },
+  };
+  return ranges[range] ?? {};
 }

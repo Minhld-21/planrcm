@@ -7,6 +7,10 @@ export type CurrentPlanningLocation = {
   label: 'Vị trí hiện tại'
   lat: number
   lng: number
+  durationDays: number
+  budgetMin?: number
+  budgetMax?: number
+  currency?: string
 }
 
 export type SelectedPlanningLocation = {
@@ -16,6 +20,10 @@ export type SelectedPlanningLocation = {
   lat?: number
   lng?: number
   googleMapsUrl?: string
+  durationDays: number
+  budgetMin?: number
+  budgetMax?: number
+  currency?: string
 }
 
 export type PlanningLocation = CurrentPlanningLocation | SelectedPlanningLocation
@@ -80,6 +88,7 @@ function isPlanningLocation(value: unknown): value is PlanningLocation {
     return (
       typeof value.label === 'string' &&
       value.label.trim().length >= 2 &&
+      'durationDays' in value && typeof value.durationDays === 'number' && value.durationDays >= 1 && value.durationDays <= 7 &&
       (!('placeId' in value) || value.placeId === undefined || typeof value.placeId === 'string') &&
       (!('lat' in value) || value.lat === undefined || typeof value.lat === 'number') &&
       (!('lng' in value) || value.lng === undefined || typeof value.lng === 'number') &&
@@ -94,5 +103,6 @@ function isPlanningLocation(value: unknown): value is PlanningLocation {
     'lng' in value &&
     typeof value.lat === 'number' &&
     typeof value.lng === 'number'
+    && 'durationDays' in value && typeof value.durationDays === 'number' && value.durationDays >= 1 && value.durationDays <= 7
   )
 }
