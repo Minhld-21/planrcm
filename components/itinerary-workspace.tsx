@@ -141,25 +141,20 @@ export function ItineraryWorkspace() {
 
   if (!location) {
     return (
-      <section className="texture-grid border-4 border-black bg-white p-8 sm:p-12">
-        <p className="font-mono text-xs font-medium tracking-[0.16em] uppercase">
-          Chưa có điểm đến
-        </p>
-        <h1 className="font-display mt-6 max-w-xl text-5xl leading-none tracking-tight">
-          Chọn nơi bạn muốn đi.
+      <section className="rounded-3xl border border-slate-200 bg-white p-8 sm:p-12 shadow-sm text-center">
+        <span className="text-4xl">🏝️</span>
+        <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900">
+          Chưa chọn điểm đến du lịch
         </h1>
-        <p className="mt-5 max-w-xl text-lg leading-8 text-muted">
-          Bạn có thể nhập điểm đến để lên kế hoạch trước, hoặc chọn dùng vị trí
-          hiện tại.
+        <p className="mt-3 text-sm text-slate-600 max-w-md mx-auto">
+          Hãy nhập điểm đến bạn muốn khám phá hoặc chọn vị trí hiện tại ở trang chủ để nhận kế hoạch từ AI.
         </p>
         <a
           href="/"
-          className="font-mono mt-8 inline-flex min-h-11 items-center border-2 border-black bg-black px-5 py-3 text-xs font-medium tracking-[0.12em] text-white uppercase transition-none hover:bg-white hover:text-black focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black"
+          className="mt-6 inline-flex items-center gap-2 rounded-2xl bg-sky-500 px-6 py-3.5 text-xs font-bold text-white shadow-md hover:bg-sky-600 transition-all"
         >
-          Về trang chủ{" "}
-          <span className="ml-3 text-base leading-none" aria-hidden="true">
-            →
-          </span>
+          <span>Về trang chủ chọn điểm đến</span>
+          <span>→</span>
         </a>
       </section>
     );
@@ -168,79 +163,82 @@ export function ItineraryWorkspace() {
   if (status === "loading") {
     return (
       <section
-        className="texture-grid grid min-h-72 place-items-center border-2 border-black px-6 py-10 text-center"
+        className="rounded-3xl border border-slate-200 bg-white p-12 text-center shadow-sm"
         role="status"
         aria-live="polite"
       >
-        <div>
-          <p className="font-mono text-[10px] font-medium tracking-[0.16em] uppercase">
-            PlanRCM
-          </p>
-          <p className="font-display mt-4 text-3xl leading-tight tracking-tight sm:text-4xl">
-            Đang kiểm tra quyền lưu lịch trình...
-          </p>
+        <div className="flex flex-col items-center justify-center gap-3">
+          <span className="h-8 w-8 animate-spin rounded-full border-4 border-sky-500 border-t-transparent" />
+          <p className="text-sm font-bold text-slate-700">Đang chuẩn bị không gian lịch trình...</p>
         </div>
       </section>
     );
   }
 
   return (
-    <section>
-      <div className="font-mono mb-7 flex flex-wrap gap-x-5 gap-y-2 border-b-2 border-black pb-4 text-[10px] font-medium tracking-[0.12em] text-muted uppercase">
-        <span>
-          {location.kind === "destination"
-            ? "Điểm đến đã chọn"
-            : "Vị trí hiện tại"}
+    <section className="py-6">
+      {/* Location Badge Bar */}
+      <div className="mb-6 flex flex-wrap items-center gap-2 text-xs font-bold text-slate-600">
+        <span className="rounded-full bg-sky-50 px-3.5 py-1.5 text-sky-700 border border-sky-100">
+          📍 {location.kind === "destination" ? "Điểm đến:" : "Vị trí hiện tại:"} {location.label}
         </span>
-        <span>{location.durationDays} ngày</span>
-        {(location.budgetMin !== undefined || location.budgetMax !== undefined) && <span>Ngân sách đã chọn</span>}
-        <span>
-          {location.kind === "destination"
-            ? location.label
-            : `${location.lat.toFixed(4)}, ${location.lng.toFixed(4)}`}
+        <span className="rounded-full bg-slate-100 px-3.5 py-1.5 text-slate-700">
+          🗓️ {location.durationDays} ngày
         </span>
+        {(location.budgetMin !== undefined || location.budgetMax !== undefined) && (
+          <span className="rounded-full bg-emerald-50 px-3.5 py-1.5 text-emerald-700 border border-emerald-100">
+            💰 Đã thiết lập ngân sách
+          </span>
+        )}
       </div>
+
+      {/* Account Status Card */}
       <section
-        className={`mb-7 border-2 border-black p-5 sm:p-6 ${user ? "bg-black text-white" : "bg-surface"}`}
+        className={`mb-8 rounded-3xl p-6 shadow-sm border transition-all ${
+          user
+            ? "border-sky-200 bg-gradient-to-r from-sky-500 to-sky-600 text-white"
+            : "border-slate-200 bg-white text-slate-900"
+        }`}
         aria-label="Trạng thái tài khoản"
       >
         {user ? (
-          <>
-            <p className="font-mono text-[10px] font-medium tracking-[0.14em] uppercase">
-              Đã đăng nhập với Google
-            </p>
-            <p className="font-display mt-3 text-2xl leading-none tracking-tight sm:text-3xl">
-              Mọi thay đổi của bạn được lưu vào lịch sử.
-            </p>
-            <p className="mt-3 text-sm leading-6 text-white/75">{user.email}</p>
-          </>
-        ) : (
-          <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <p className="font-mono text-[10px] font-medium tracking-[0.14em] uppercase">
-                Chế độ khách
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-bold text-white backdrop-blur-md">
+                ✓ Đã đăng nhập Google
+              </span>
+              <p className="mt-2 text-lg font-bold">
+                Lịch trình này đã tự động lưu vào tài khoản cá nhân của bạn.
               </p>
-              <p className="font-display mt-3 max-w-2xl text-2xl leading-none tracking-tight sm:text-3xl">
-                Lịch trình này không được lưu và không thể tùy chỉnh.
+              <p className="text-xs text-white/80 mt-0.5">{user.email}</p>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-800">
+                ⚡ Chế độ khách (Xem thử)
+              </span>
+              <p className="mt-2 text-lg font-bold text-slate-900">
+                Lịch trình này chưa được lưu vào tài khoản.
               </p>
-              <p className="mt-3 max-w-2xl text-sm leading-6 text-muted">
-                Bạn có một lượt tạo lịch trình trong 24 giờ. Đăng nhập để lưu
-                các plan và tạo lại theo sở thích.
+              <p className="text-xs text-slate-500 max-w-xl mt-1">
+                Đăng nhập bằng tài khoản Google để lưu vĩnh viễn, chỉnh sửa chi tiết và chia sẻ lên Market Plan.
               </p>
             </div>
             <button
               type="button"
               onClick={() => signIn("/itinerary")}
-              className="font-mono min-h-11 shrink-0 border-2 border-black bg-black px-5 py-3 text-xs font-medium tracking-[0.12em] text-white uppercase hover:bg-white hover:text-black focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black"
+              className="inline-flex shrink-0 items-center gap-2 rounded-2xl bg-sky-500 px-6 py-3.5 text-xs font-bold text-white shadow-md hover:bg-sky-600 transition-all"
             >
-              Đăng nhập Google{" "}
-              <span className="ml-2" aria-hidden="true">
-                ↗
-              </span>
+              <span>Đăng nhập Google</span>
+              <span>↗</span>
             </button>
           </div>
         )}
       </section>
+
+      {/* Package Selector Component */}
       <PackageSelector
         selectedPackages={selectedPackages}
         onChange={setSelectedPackages}
@@ -248,97 +246,111 @@ export function ItineraryWorkspace() {
         isLoading={isLoading}
         disabled={!user}
       />
+
       {error && (
-        <div role="alert" className="mt-7 border-2 border-black bg-surface p-5">
-          <p className="font-mono text-xs font-medium tracking-[0.12em] uppercase">
-            Không thể tạo lịch trình
-          </p>
-          <p className="mt-2 leading-7">{error}</p>
+        <div role="alert" className="mt-6 rounded-2xl border border-rose-200 bg-rose-50 p-5 text-xs font-medium text-rose-800">
+          <p className="font-bold text-rose-900">Không thể tạo lịch trình</p>
+          <p className="mt-1">{error}</p>
           {user ? (
             <button
               type="button"
               onClick={() => void generate(selectedPackages)}
-              className="font-mono mt-5 min-h-11 border-2 border-black px-4 py-2 text-[10px] font-medium tracking-[0.12em] uppercase hover:bg-black hover:text-white focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black"
+              className="mt-4 rounded-xl bg-rose-600 px-4 py-2 text-white font-bold hover:bg-rose-700 transition-colors"
             >
-              Thử lại —
+              Thử lại ↻
             </button>
           ) : (
             <button
               type="button"
               onClick={() => signIn("/itinerary")}
-              className="font-mono mt-5 min-h-11 border-2 border-black bg-black px-4 py-2 text-[10px] font-medium tracking-[0.12em] text-white uppercase hover:bg-white hover:text-black focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black"
+              className="mt-4 rounded-xl bg-sky-500 px-4 py-2 text-white font-bold hover:bg-sky-600 transition-colors"
             >
               Đăng nhập để thử lại ↗
             </button>
           )}
         </div>
       )}
+
+      {/* Generated Itinerary Display */}
       {itinerary ? (
-        <div className="relative mt-10">
+        <div className="relative mt-8">
           <ItineraryTimeline itinerary={itinerary} />
           <AddToGoogleCalendar itinerary={itinerary} />
+
           {user && itinerary.savedPlanId && (
             <section
-              className={`mt-5 border-2 border-black p-4 sm:flex sm:items-center sm:justify-between sm:gap-6 ${planVisibility === "public" ? "bg-black text-white" : "bg-surface"}`}
+              className={`mt-8 rounded-3xl p-6 shadow-sm border transition-all ${
+                planVisibility === "public"
+                  ? "border-emerald-200 bg-emerald-50 text-emerald-900"
+                  : "border-slate-200 bg-white text-slate-900"
+              }`}
               aria-label="Chia sẻ lịch trình"
             >
-              <div>
-                <p className="font-mono text-[10px] font-medium tracking-[0.12em] uppercase">
-                  {planVisibility === "public"
-                    ? "Đang hiển thị trong Market Plan"
-                    : "Đã lưu riêng tư vào Cloud Firestore"}
-                </p>
-                <p
-                  className={`mt-2 text-sm leading-6 ${planVisibility === "public" ? "text-white/75" : "text-muted"}`}
-                >
-                  {planVisibility === "public"
-                    ? "Mọi người có thể xem itinerary này; email của bạn không được hiển thị."
-                    : "Chia sẻ để cộng đồng có thể khám phá itinerary này."}
-                </p>
-                {shareError && (
-                  <p role="alert" className="mt-2 text-sm leading-6 underline">
-                    {shareError}
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-sky-600">
+                    {planVisibility === "public"
+                      ? "🌐 Đã chia sẻ công khai lên Market Plan"
+                      : "🔒 Đã lưu riêng tư trong tài khoản"}
+                  </span>
+                  <p className="mt-1 text-sm font-bold">
+                    {planVisibility === "public"
+                      ? "Mọi người trên Market Plan đều có thể tham khảo lịch trình này."
+                      : "Chỉ một mình bạn nhìn thấy lịch trình này."}
                   </p>
-                )}
-              </div>
-              <div className="mt-4 flex flex-wrap gap-3 sm:mt-0 sm:shrink-0">
-                <button
-                  type="button"
-                  onClick={() => void handleClone()}
-                  disabled={isCloning}
-                  className={`font-mono min-h-11 border-2 px-4 py-2 text-[10px] font-medium tracking-[0.1em] uppercase disabled:cursor-wait disabled:opacity-60 ${planVisibility === "public" ? "border-white text-white hover:bg-white hover:text-black" : "border-black hover:bg-black hover:text-white"}`}
-                >
-                  {isCloning ? "Đang sao chép..." : "Sao chép plan"}
-                </button>
-                {planVisibility === "public" && (
-                  <a
-                    href={`/market/${itinerary.savedPlanId}`}
-                    className="font-mono inline-flex min-h-11 items-center border-2 border-white px-4 py-2 text-[10px] font-medium tracking-[0.1em] uppercase hover:bg-white hover:text-black focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-white"
+                  {shareError && (
+                    <p role="alert" className="mt-1 text-xs text-rose-500">
+                      {shareError}
+                    </p>
+                  )}
+                </div>
+
+                <div className="flex flex-wrap gap-2 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => void handleClone()}
+                    disabled={isCloning}
+                    className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-100 transition-all disabled:opacity-60"
                   >
-                    Xem trong Market ↗
-                  </a>
-                )}
-                <button
-                  type="button"
-                  onClick={() => void handleVisibilityChange()}
-                  disabled={isUpdatingVisibility}
-                  className={`font-mono min-h-11 border-2 px-4 py-2 text-[10px] font-medium tracking-[0.1em] uppercase focus-visible:outline-3 focus-visible:outline-offset-3 disabled:cursor-wait disabled:opacity-60 ${planVisibility === "public" ? "border-white bg-white text-black hover:bg-black hover:text-white focus-visible:outline-white" : "border-black bg-black text-white hover:bg-white hover:text-black focus-visible:outline-black"}`}
-                >
-                  {isUpdatingVisibility
-                    ? "Đang cập nhật"
-                    : planVisibility === "public"
-                      ? "Gỡ khỏi Market"
-                      : "Chia sẻ lên Market"}
-                </button>
+                    {isCloning ? "Đang sao chép..." : "Sao chép bản riêng 📋"}
+                  </button>
+
+                  {planVisibility === "public" && (
+                    <a
+                      href={`/market/${itinerary.savedPlanId}`}
+                      className="rounded-xl bg-sky-50 px-4 py-2.5 text-xs font-bold text-sky-600 hover:bg-sky-500 hover:text-white transition-all"
+                    >
+                      Xem trên Market ↗
+                    </a>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={() => void handleVisibilityChange()}
+                    disabled={isUpdatingVisibility}
+                    className={`rounded-xl px-4 py-2.5 text-xs font-bold transition-all disabled:opacity-60 ${
+                      planVisibility === "public"
+                        ? "bg-amber-100 text-amber-800 hover:bg-amber-200"
+                        : "bg-sky-500 text-white hover:bg-sky-600 shadow-md shadow-sky-500/20"
+                    }`}
+                  >
+                    {isUpdatingVisibility
+                      ? "Đang xử lý..."
+                      : planVisibility === "public"
+                        ? "Gỡ khỏi Market"
+                        : "Chia sẻ lên Market 🌐"}
+                  </button>
+                </div>
               </div>
-              {cloneMessage && <p role="status" className="mt-3 text-sm leading-6">{cloneMessage}</p>}
+              {cloneMessage && <p role="status" className="mt-3 text-xs font-bold text-sky-700">{cloneMessage}</p>}
             </section>
           )}
+
           {isLoading && <LoadingItinerary overlay />}
         </div>
       ) : (
         !error && (
-          <div className="mt-10">
+          <div className="mt-8">
             <LoadingItinerary />
           </div>
         )

@@ -16,46 +16,68 @@ export function SiteHeader() {
 
   const authAction =
     status === 'loading' ? (
-      <span className="text-muted">Đang kiểm tra</span>
+      <span className="text-xs text-slate-400">Đang kiểm tra...</span>
     ) : user ? (
-      <span className="flex items-center gap-3">
-        <span className="max-w-28 truncate" title={user.email}>{user.name}</span>
+      <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 rounded-full bg-sky-50 px-3 py-1.5 border border-sky-100">
+          {user.avatarUrl ? (
+            <img
+              src={user.avatarUrl}
+              alt=""
+              className="h-6 w-6 rounded-full object-cover border border-sky-200"
+              referrerPolicy="no-referrer"
+            />
+          ) : (
+            <span className="grid h-6 w-6 place-items-center rounded-full bg-sky-500 text-[10px] font-semibold text-white">
+              {user.name.slice(0, 1).toUpperCase()}
+            </span>
+          )}
+          <span className="max-w-28 truncate text-xs font-semibold text-slate-700" title={user.email}>
+            {user.name}
+          </span>
+        </div>
         <button
           type="button"
           onClick={() => void signOut()}
-          className="border-b border-black pb-1 hover:border-transparent focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black"
+          className="rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-colors"
         >
           Đăng xuất
         </button>
-      </span>
+      </div>
     ) : (
       <button
         type="button"
         onClick={() => signIn('/')}
-        className="border-b border-black pb-1 hover:border-transparent focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black"
+        className="inline-flex items-center gap-2 rounded-xl bg-sky-500 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-sky-600 active:scale-98 transition-all"
       >
-        Đăng nhập Google
+        <span>Đăng nhập Google</span>
+        <span aria-hidden="true">↗</span>
       </button>
     )
 
   return (
-    <header className="border-b-2 border-black bg-white">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 sm:px-8 lg:px-12">
+    <header className="sticky top-0 z-40 travel-glass border-b border-slate-200/80">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3.5 sm:px-8 lg:px-12">
         <a
           href="/"
-          className="font-mono text-sm font-medium tracking-[0.18em] text-black uppercase outline-offset-4 focus-visible:outline-3 focus-visible:outline-black"
+          className="group flex items-center gap-2.5 outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 rounded-lg"
           aria-label="PlanRCM, về trang chủ"
         >
-          Plan<span className="inline-block border border-black px-1.5 py-0.5">R</span>CM
+          <div className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-tr from-sky-500 to-cyan-400 text-white font-bold text-lg shadow-sm shadow-sky-500/20 group-hover:scale-105 transition-transform">
+            🗺️
+          </div>
+          <span className="text-xl font-bold tracking-tight text-slate-900">
+            Plan<span className="text-sky-500">RCM</span>
+          </span>
         </a>
 
-        <nav aria-label="Điều hướng chính" className="hidden md:ml-auto md:block">
-          <ul className="font-mono flex flex-wrap items-center justify-end gap-x-5 gap-y-3 text-[10px] font-medium tracking-[0.14em] uppercase lg:gap-x-7">
+        <nav aria-label="Điều hướng chính" className="hidden md:block">
+          <ul className="flex items-center gap-1.5 text-xs font-semibold text-slate-600">
             {navigation.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
-                  className="border-b border-transparent pb-1 transition-none hover:border-black focus-visible:border-black focus-visible:outline-none"
+                  className="rounded-lg px-3.5 py-2 hover:bg-sky-50 hover:text-sky-600 transition-colors"
                 >
                   {item.label}
                 </a>
@@ -65,53 +87,54 @@ export function SiteHeader() {
               <li>
                 <a
                   href="/plans"
-                  className="border-b border-transparent pb-1 transition-none hover:border-black focus-visible:border-black focus-visible:outline-none"
+                  className="rounded-lg bg-sky-50 px-3.5 py-2 text-sky-600 hover:bg-sky-100 transition-colors"
                 >
                   Plan của tôi
                 </a>
               </li>
             )}
-            <li className="border-l border-black pl-5 lg:pl-7">{authAction}</li>
           </ul>
         </nav>
+
+        <div className="hidden md:flex md:items-center md:gap-3">{authAction}</div>
 
         <button
           type="button"
           onClick={() => setIsMenuOpen((open) => !open)}
           aria-expanded={isMenuOpen}
           aria-controls="mobile-nav"
-          className="font-mono min-h-11 min-w-11 border-2 border-black px-3 text-[10px] font-medium tracking-[0.12em] uppercase focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black md:hidden"
+          className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 focus-visible:ring-2 focus-visible:ring-sky-500 md:hidden"
         >
-          {isMenuOpen ? 'Đóng' : 'Menu'}
+          <span className="text-lg">{isMenuOpen ? '✕' : '☰'}</span>
         </button>
       </div>
 
       {isMenuOpen && (
-        <nav id="mobile-nav" aria-label="Điều hướng chính" className="border-t-2 border-black md:hidden">
-          <ul className="font-mono flex flex-col text-xs font-medium tracking-[0.12em] uppercase">
+        <nav id="mobile-nav" aria-label="Điều hướng chính" className="border-t border-slate-200 bg-white p-5 md:hidden">
+          <ul className="flex flex-col gap-2 text-sm font-semibold text-slate-700">
             {navigation.map((item) => (
-              <li key={item.href} className="border-b border-line">
+              <li key={item.href}>
                 <a
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="block px-5 py-4 hover:bg-black hover:text-white focus-visible:bg-black focus-visible:text-white focus-visible:outline-none sm:px-8"
+                  className="block rounded-xl px-4 py-3 hover:bg-sky-50 hover:text-sky-600 transition-colors"
                 >
                   {item.label}
                 </a>
               </li>
             ))}
             {user && (
-              <li className="border-b border-line">
+              <li>
                 <a
                   href="/plans"
                   onClick={() => setIsMenuOpen(false)}
-                  className="block px-5 py-4 hover:bg-black hover:text-white focus-visible:bg-black focus-visible:text-white focus-visible:outline-none sm:px-8"
+                  className="block rounded-xl bg-sky-50 px-4 py-3 text-sky-600 hover:bg-sky-100 transition-colors"
                 >
                   Plan của tôi
                 </a>
               </li>
             )}
-            <li className="px-5 py-4 sm:px-8">{authAction}</li>
+            <li className="pt-3 border-t border-slate-100">{authAction}</li>
           </ul>
         </nav>
       )}

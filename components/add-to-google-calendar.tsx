@@ -27,29 +27,29 @@ export function AddToGoogleCalendar({
 
   return (
     <section
-      className="mt-5 border-2 border-black bg-surface p-5 sm:p-6"
+      className="mt-6 rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm"
       aria-labelledby="calendar-export-title"
     >
-      <div className="grid gap-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+      <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="font-mono text-[10px] font-medium tracking-[0.14em] uppercase">
-            Google Calendar
-          </p>
+          <span className="text-xs font-bold uppercase tracking-wider text-sky-600">
+            🗓️ Đồng bộ lịch trình
+          </span>
           <h2
             id="calendar-export-title"
-            className="font-display mt-3 text-3xl leading-none tracking-tight sm:text-4xl"
+            className="mt-1 text-2xl font-bold text-slate-900"
           >
-            Đặt chuyến đi vào lịch.
+            Thêm vào Google Calendar
           </h2>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted">
-            Chọn ngày khởi hành để tạo một event cho toàn bộ chuyến đi. Timeline
-            chi tiết sẽ được thêm vào phần mô tả để bạn tiện theo dõi.
+          <p className="mt-2 max-w-xl text-xs sm:text-sm text-slate-600 leading-relaxed">
+            Chọn ngày bắt đầu chuyến đi để tự động xuất sự kiện kèm theo dòng thời gian và địa điểm chi tiết vào lịch cá nhân của bạn.
           </p>
         </div>
+
         <div className="w-full sm:w-64">
           <label
             htmlFor="calendar-start-date"
-            className="font-mono block text-[10px] font-medium tracking-[0.1em] uppercase"
+            className="text-[11px] font-bold uppercase tracking-wider text-slate-500"
           >
             Ngày khởi hành
           </label>
@@ -58,28 +58,28 @@ export function AddToGoogleCalendar({
             type="date"
             value={startDate}
             onChange={(event) => setStartDate(event.target.value)}
-            className="mt-2 min-h-11 w-full border-2 border-black bg-white px-3 text-sm focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black"
+            className="mt-1.5 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs font-semibold text-slate-900 focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-sky-100 transition-all cursor-pointer"
           />
         </div>
       </div>
-      <div className="mt-5 flex flex-col gap-3 border-t-2 border-black pt-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm leading-6 text-muted" aria-live="polite">
+
+      <div className="mt-6 flex flex-col gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-xs font-semibold text-slate-600" aria-live="polite">
           {endDate
-            ? `Chuyến đi: ${formatDate(startDate)} – ${formatDate(endDate)}.`
-            : "Chọn ngày để tiếp tục."}
+            ? `Chuyến đi kéo dài từ ${formatDate(startDate)} đến ${formatDate(endDate)}.`
+            : "Vui lòng chọn ngày khởi hành để tiếp tục."}
         </p>
+
         <button
           type="button"
           disabled={!calendarUrl}
           onClick={openCalendar}
-          className="font-mono min-h-11 w-full border-2 border-black bg-black px-5 py-3 text-[10px] font-medium tracking-[0.12em] text-white uppercase hover:bg-white hover:text-black focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black disabled:cursor-not-allowed disabled:border-line disabled:bg-line disabled:text-muted sm:w-auto"
+          className="inline-flex items-center justify-center gap-2 rounded-2xl bg-sky-500 px-6 py-3.5 text-xs font-bold text-white shadow-md shadow-sky-500/20 hover:bg-sky-600 active:scale-98 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
         >
-          Thêm vào Google Calendar ↗
+          <span>Xuất Sang Google Calendar</span>
+          <span>↗</span>
         </button>
       </div>
-      <p className="font-mono mt-3 text-[9px] font-medium tracking-[0.08em] text-muted uppercase">
-        Google Calendar sẽ mở ở tab mới để bạn kiểm tra và lưu event.
-      </p>
     </section>
   );
 }

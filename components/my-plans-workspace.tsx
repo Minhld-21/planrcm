@@ -55,7 +55,9 @@ export function MyPlansWorkspace() {
 
     try {
       const updatedPlan = await updatePlanVisibility(plan.id, plan.visibility !== 'public')
-      setPlans((currentPlans) => currentPlans.map((currentPlan) => currentPlan.id === updatedPlan.id ? updatedPlan : currentPlan))
+      setPlans((currentPlans) =>
+        currentPlans.map((currentPlan) => (currentPlan.id === updatedPlan.id ? updatedPlan : currentPlan))
+      )
     } catch (caughtError) {
       setError(caughtError instanceof Error ? caughtError.message : 'Không thể cập nhật trạng thái chia sẻ.')
     } finally {
@@ -65,67 +67,163 @@ export function MyPlansWorkspace() {
 
   if (status === 'loading') {
     return (
-      <section className="texture-grid grid min-h-72 place-items-center border-2 border-black px-6 py-10 text-center" role="status">
-        <p className="font-display text-3xl leading-tight tracking-tight sm:text-5xl">Đang mở lịch sử plan...</p>
+      <section className="rounded-3xl border border-slate-200 bg-white p-12 text-center shadow-sm" role="status">
+        <div className="flex flex-col items-center justify-center gap-3">
+          <span className="h-8 w-8 animate-spin rounded-full border-4 border-sky-500 border-t-transparent" />
+          <p className="text-sm font-bold text-slate-700">Đang mở lịch sử plan của bạn...</p>
+        </div>
       </section>
     )
   }
 
   if (!user) {
     return (
-      <section className="texture-grid border-2 border-black p-8 sm:p-12">
-        <p className="font-mono text-[10px] font-medium tracking-[0.14em] uppercase">Plan của tôi</p>
-        <h1 className="font-display mt-5 max-w-2xl text-4xl leading-[0.9] tracking-tight sm:text-6xl">Đăng nhập để xem và chia sẻ các plan đã lưu.</h1>
-        <p className="mt-5 max-w-xl leading-7 text-muted">Lịch trình khách không được lưu. Khi đăng nhập Google, mỗi itinerary mới sẽ nằm trong lịch sử riêng của bạn.</p>
-        <button type="button" onClick={() => signIn('/plans')} className="font-mono mt-8 min-h-11 border-2 border-black bg-black px-5 py-3 text-[10px] font-medium tracking-[0.12em] text-white uppercase hover:bg-white hover:text-black focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black">Đăng nhập Google ↗</button>
+      <section className="rounded-3xl border border-slate-200 bg-white p-8 sm:p-12 shadow-sm">
+        <span className="text-4xl">🔑</span>
+        <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900">
+          Đăng nhập để xem lịch sử chuyến đi
+        </h1>
+        <p className="mt-3 text-sm text-slate-600 max-w-lg">
+          Lịch trình ở chế độ khách không tự động lưu. Khi đăng nhập bằng tài khoản Google, các bản kế hoạch sẽ được lưu trữ an toàn trong kho cá nhân của bạn.
+        </p>
+        <button
+          type="button"
+          onClick={() => signIn('/plans')}
+          className="mt-6 inline-flex items-center gap-2 rounded-2xl bg-sky-500 px-6 py-3.5 text-xs font-bold text-white shadow-md shadow-sky-500/20 hover:bg-sky-600 transition-all"
+        >
+          <span>Đăng nhập Google</span>
+          <span>↗</span>
+        </button>
       </section>
     )
   }
 
   return (
-    <section>
-      <header className="grid gap-6 border-b-4 border-black pb-8 sm:pb-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+    <section className="py-8">
+      <header className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 border-b border-slate-200 pb-8">
         <div>
-          <p className="font-mono text-[10px] font-medium tracking-[0.16em] uppercase">Lịch sử riêng tư</p>
-          <h1 className="font-display mt-4 text-5xl leading-[0.86] tracking-tight sm:text-7xl">Plan của tôi</h1>
+          <span className="text-xs font-bold uppercase tracking-wider text-sky-600">Bộ Sưu Tập Cá Nhân</span>
+          <h1 className="mt-1 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">Plan Của Tôi</h1>
         </div>
-        <p className="max-w-sm border-l-2 border-black pl-4 text-sm leading-6 text-muted">Bạn quyết định plan nào xuất hiện trong Market. Tắt chia sẻ để gỡ ngay khỏi danh sách công khai.</p>
+        <p className="text-xs text-slate-500 max-w-sm">
+          Bạn toàn quyền bật/tắt chia sẻ lên Market Plan. Gỡ bỏ bất kỳ lúc nào nếu muốn giữ riêng tư.
+        </p>
       </header>
 
-      {error && <div role="alert" className="mt-7 border-2 border-black bg-surface p-5"><p className="font-mono text-[10px] font-medium tracking-[0.12em] uppercase">Không thể cập nhật</p><p className="mt-2 leading-7">{error}</p></div>}
-      {notice && <div role="status" className="mt-7 border-2 border-black bg-black p-5 text-white"><p className="font-mono text-[10px] font-medium tracking-[0.12em] uppercase">Plan đã sẵn sàng</p><p className="mt-2 leading-7 text-white/80">{notice}</p></div>}
+      {error && (
+        <div role="alert" className="mt-6 rounded-2xl border border-rose-200 bg-rose-50 p-4 text-xs font-medium text-rose-700">
+          ⚠️ {error}
+        </div>
+      )}
+      {notice && (
+        <div role="status" className="mt-6 rounded-2xl border border-sky-200 bg-sky-50 p-4 text-xs font-bold text-sky-800">
+          ✨ {notice}
+        </div>
+      )}
 
-      {isLoading && <div className="grid gap-0 border-l-2 border-black md:grid-cols-2">{Array.from({ length: 4 }, (_, index) => <div key={index} className="min-h-56 border-r-2 border-b-2 border-black bg-surface p-6 animate-pulse"><div className="h-3 w-24 bg-black/15" /><div className="mt-10 h-10 max-w-64 bg-black/15" /><div className="mt-10 h-10 w-36 bg-black/15" /></div>)}</div>}
+      {isLoading && (
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
+          {Array.from({ length: 4 }, (_, index) => (
+            <div key={index} className="h-64 rounded-3xl border border-slate-200 bg-white p-6 animate-pulse">
+              <div className="h-4 w-24 rounded bg-slate-200" />
+              <div className="mt-6 h-8 w-48 rounded bg-slate-200" />
+              <div className="mt-4 h-4 w-32 rounded bg-slate-200" />
+            </div>
+          ))}
+        </div>
+      )}
 
       {!isLoading && plans.length === 0 && (
-        <div className="texture-grid border-b-2 border-black px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
-          <p className="font-mono text-[10px] font-medium tracking-[0.14em] uppercase">Chưa có lịch sử</p>
-          <h2 className="font-display mt-5 max-w-2xl text-4xl leading-[0.9] tracking-tight sm:text-6xl">Tạo plan đầu tiên của bạn.</h2>
-          <a href="/#tao-ke-hoach" className="font-mono mt-8 inline-flex min-h-11 items-center border-2 border-black bg-black px-5 py-3 text-[10px] font-medium tracking-[0.12em] text-white uppercase hover:bg-white hover:text-black focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black">Tạo lịch trình →</a>
+        <div className="mt-8 rounded-3xl border border-slate-200 bg-white p-12 text-center shadow-sm">
+          <span className="text-4xl">🧳</span>
+          <h2 className="mt-4 text-2xl font-bold text-slate-900">Chưa có plan nào được lưu</h2>
+          <p className="mt-2 text-sm text-slate-500 max-w-md mx-auto">
+            Hãy tạo chuyến đi đầu tiên và bắt đầu lên kế hoạch khám phá!
+          </p>
+          <a
+            href="/#tao-ke-hoach"
+            className="mt-6 inline-flex items-center gap-2 rounded-2xl bg-sky-500 px-6 py-3.5 text-xs font-bold text-white shadow-md hover:bg-sky-600 transition-all"
+          >
+            <span>Tạo Lịch Trình Mới</span>
+            <span>→</span>
+          </a>
         </div>
       )}
 
       {!isLoading && plans.length > 0 && (
-        <div className="grid border-l-2 border-black md:grid-cols-2">
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
           {plans.map((plan) => {
             const isPublic = plan.visibility === 'public'
             const isUpdating = updatingPlanId === plan.id
 
             return (
-              <article key={plan.id} className={`flex min-h-72 flex-col border-r-2 border-b-2 border-black p-5 sm:p-7 ${isPublic ? 'bg-black text-white' : 'bg-white'}`}>
-                <div className="flex items-start justify-between gap-4">
-                  <p className="font-mono text-[10px] font-medium tracking-[0.12em] uppercase">{formatDate(plan.createdAt)}</p>
-                  <span className="font-mono border border-current px-2 py-1 text-[9px] font-medium tracking-[0.1em] uppercase">{isPublic ? 'Đang chia sẻ' : 'Riêng tư'}</span>
-                </div>
-                <h2 className="font-display mt-10 text-4xl leading-[0.9] tracking-tight sm:text-5xl">{plan.itinerary.destination}</h2>
-                <p className={`font-mono mt-4 text-[10px] font-medium tracking-[0.1em] uppercase ${isPublic ? 'text-white/70' : 'text-muted'}`}>{plan.itinerary.totalDays} ngày · {plan.itinerary.theme.join(' / ') || 'Hành trình tự do'}</p>
-                {(plan.itinerary.budgetMin !== undefined || plan.itinerary.budgetMax !== undefined) && <p className={`font-mono mt-2 text-[10px] font-medium tracking-[0.1em] uppercase ${isPublic ? 'text-white/70' : 'text-muted'}`}>Ngân sách: {formatBudget(plan.itinerary.budgetMin, plan.itinerary.budgetMax, plan.itinerary.currency)}</p>}
-                <div className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-current pt-5">
-                  <div className="flex flex-wrap gap-4">
-                    <a href={`/plans/${plan.id}`} className="font-mono min-h-11 border-b-2 border-current py-2 text-[10px] font-medium tracking-[0.1em] uppercase focus-visible:outline-3 focus-visible:outline-offset-3">Chỉnh sửa →</a>
-                    {isPublic && <a href={`/market/${plan.id}`} className="font-mono min-h-11 border-b-2 border-current py-2 text-[10px] font-medium tracking-[0.1em] uppercase focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-white">Xem công khai ↗</a>}
+              <article
+                key={plan.id}
+                className="travel-card flex flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-all"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-xs font-semibold text-slate-400">
+                      Tạo ngày {formatDate(plan.createdAt)}
+                    </span>
+                    <span
+                      className={`rounded-full px-3 py-1 text-[11px] font-bold ${
+                        isPublic
+                          ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                          : 'bg-slate-100 text-slate-600 border border-slate-200'
+                      }`}
+                    >
+                      {isPublic ? '🌐 Công Khai (Market)' : '🔒 Riêng Tư'}
+                    </span>
                   </div>
-                  <button type="button" onClick={() => void toggleVisibility(plan)} disabled={isUpdating} className={`font-mono min-h-11 border-2 px-4 py-2 text-[10px] font-medium tracking-[0.1em] uppercase focus-visible:outline-3 focus-visible:outline-offset-3 disabled:cursor-wait disabled:opacity-60 ${isPublic ? 'border-white bg-white text-black hover:bg-black hover:text-white focus-visible:outline-white' : 'border-black bg-black text-white hover:bg-white hover:text-black focus-visible:outline-black'}`}>{isUpdating ? 'Đang cập nhật' : isPublic ? 'Gỡ khỏi Market' : 'Chia sẻ lên Market'}</button>
+
+                  <h2 className="mt-5 text-2xl font-extrabold tracking-tight text-slate-900">
+                    {plan.itinerary.destination}
+                  </h2>
+
+                  <p className="mt-2 text-xs font-semibold text-sky-600">
+                    {plan.itinerary.totalDays} ngày · {plan.itinerary.theme.join(' / ') || 'Hành trình tự do'}
+                  </p>
+
+                  {(plan.itinerary.budgetMin !== undefined || plan.itinerary.budgetMax !== undefined) && (
+                    <p className="mt-2 text-xs text-slate-500">
+                      Ngân sách: <strong className="text-slate-700">{formatBudget(plan.itinerary.budgetMin, plan.itinerary.budgetMax, plan.itinerary.currency)}</strong>
+                    </p>
+                  )}
+                </div>
+
+                <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-4">
+                  <div className="flex flex-wrap gap-2">
+                    <a
+                      href={`/plans/${plan.id}`}
+                      className="inline-flex items-center gap-1.5 rounded-xl bg-sky-50 px-4 py-2 text-xs font-bold text-sky-600 hover:bg-sky-500 hover:text-white transition-all"
+                    >
+                      <span>Tùy chỉnh</span>
+                      <span>✏️</span>
+                    </a>
+                    {isPublic && (
+                      <a
+                        href={`/market/${plan.id}`}
+                        className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-all"
+                      >
+                        <span>Xem Market</span>
+                        <span>↗</span>
+                      </a>
+                    )}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => void toggleVisibility(plan)}
+                    disabled={isUpdating}
+                    className={`rounded-xl px-4 py-2 text-xs font-bold transition-all disabled:opacity-60 ${
+                      isPublic
+                        ? 'border border-amber-200 bg-amber-50 text-amber-800 hover:bg-amber-100'
+                        : 'border border-sky-200 bg-sky-50 text-sky-700 hover:bg-sky-100'
+                    }`}
+                  >
+                    {isUpdating ? 'Đang lưu...' : isPublic ? 'Gỡ khỏi Market' : 'Chia sẻ Market 🌐'}
+                  </button>
                 </div>
               </article>
             )

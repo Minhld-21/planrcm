@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function PlansPage() {
   return (
-    <main id="main-content" className="bg-white py-8 text-black sm:py-12 lg:py-16">
+    <main id="main-content" className="bg-[#F8FBFD] py-6 text-slate-900 min-h-screen">
       <div className="mx-auto max-w-6xl px-4 sm:px-8 lg:px-12">
         <MyPlansWorkspace />
       </div>

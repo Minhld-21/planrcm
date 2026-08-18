@@ -84,51 +84,50 @@ export function HomeHero() {
   }
 
   return (
-    <section className="texture-grid relative border-b-4 border-black bg-white">
-      <div className="mx-auto max-w-6xl px-5 pt-14 pb-10 sm:px-8 sm:pt-20 lg:px-12 lg:pt-28 lg:pb-14">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
-          <div className="lg:col-span-9">
-            <p className="font-mono text-xs font-medium tracking-[0.16em] uppercase">
-              PlanRCM / Lịch trình có cấu trúc
-            </p>
-            <h1 className="font-display mt-7 max-w-5xl text-[clamp(4.2rem,12vw,10rem)] leading-[0.76] font-medium tracking-[-0.065em] uppercase">
-              <span className="block">Đi</span>
-              <span className="block pl-[0.12em] underline decoration-4 underline-offset-[0.1em]">
-                đúng nhịp.
-              </span>
-            </h1>
-          </div>
-          <div className="flex items-end lg:col-span-3 lg:pb-3">
-            <p className="max-w-xs border-l-2 border-black pl-5 text-lg leading-8">
-              Lên kế hoạch cho nơi bạn sắp đến, không cần đợi đến khi khởi hành.
-            </p>
-          </div>
+    <section className="relative bg-gradient-to-b from-sky-50 via-white to-sky-50/50 pt-10 pb-16 lg:pt-16 lg:pb-24">
+      {/* Decorative background glow */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="absolute top-0 left-1/2 h-[450px] w-[800px] -translate-x-1/2 rounded-full bg-sky-200/40 blur-3xl" />
+      </div>
+
+      <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12">
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="inline-flex items-center gap-2 rounded-full bg-sky-100 px-4 py-1.5 text-xs font-bold text-sky-700 shadow-sm border border-sky-200">
+            <span>✨ Trợ Lý Lập Kế Hoạch Du Lịch AI</span>
+          </span>
+
+          <h1 className="mt-6 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+            Đi thông minh. <br className="hidden sm:inline" />
+            <span className="hero-gradient-text">Trải nghiệm đúng nhịp.</span>
+          </h1>
+
+          <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
+            Tự động lập lịch trình du lịch tối ưu thời gian, ngân sách và sở thích cá nhân chỉ trong vài giây.
+          </p>
         </div>
 
+        {/* Travel Search Panel Console */}
         <form
           onSubmit={planForDestination}
-          className="mt-14 border-y-4 border-black py-6 sm:mt-20 sm:py-8"
+          className="mt-10 rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-900/5 sm:p-8"
           aria-labelledby="destination-heading"
         >
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-5">
             <div>
-              <p className="font-mono text-[10px] font-medium tracking-[0.15em] uppercase">
-                01 / Chọn điểm đến
-              </p>
+              <span className="text-xs font-bold uppercase tracking-wider text-sky-600">01 / Điểm đến của bạn</span>
               <h2
                 id="destination-heading"
-                className="font-display mt-3 text-3xl leading-[0.95] tracking-tight sm:text-5xl"
+                className="mt-1 text-2xl font-bold text-slate-900"
               >
                 Bạn muốn đi đâu?
               </h2>
             </div>
-            <p className="max-w-sm border-l-2 border-black pl-4 text-sm leading-6 text-muted">
-              Nhập thành phố, tỉnh hoặc một địa điểm cụ thể. AI sẽ lập lịch
-              trình đúng tại nơi bạn chọn.
+            <p className="text-xs text-slate-500 max-w-xs">
+              Nhập tên thành phố, tỉnh hoặc địa danh cụ thể để AI thiết kế lịch trình riêng cho bạn.
             </p>
           </div>
 
-          <div className="mt-6 grid gap-3 lg:grid-cols-[minmax(0,1fr)_10rem_13rem_auto]">
+          <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1fr)_11rem_13rem_auto]">
             <PlaceAutocomplete
               id="destination"
               value={destination}
@@ -138,25 +137,36 @@ export function HomeHero() {
               }}
               onSelect={setSelectedPlace}
               label="Điểm đến"
-              placeholder="Ví dụ: Đà Lạt, Lâm Đồng"
-              className="min-w-0"
+              placeholder="Nhập tỉnh, thành phố (VD: Đà Lạt, Phú Quốc)..."
+              className="min-w-0 z-30"
+              inputClassName="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-5 py-3.5 text-base font-medium text-slate-900 placeholder:text-slate-400 focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-sky-100 transition-all"
             />
-            <label className="font-mono grid min-h-14 gap-1 border-2 border-black bg-white px-3 py-2 text-[9px] font-medium tracking-[0.1em] uppercase focus-within:outline-3 focus-within:outline-offset-3 focus-within:outline-black">
-              Thời gian
+
+            <div className="flex flex-col justify-center rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-2.5">
+              <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                Thời gian
+              </label>
               <select
                 value={durationDays}
                 onChange={(event) => setDurationDays(Number(event.target.value))}
-                className="min-w-0 bg-transparent text-xs font-semibold normal-case outline-none"
+                className="w-full bg-transparent text-sm font-semibold text-slate-900 outline-none cursor-pointer"
               >
-                {[1, 2, 3, 4, 5, 6, 7].map((days) => <option key={days} value={days}>{days} ngày</option>)}
+                {[1, 2, 3, 4, 5, 6, 7].map((days) => (
+                  <option key={days} value={days}>
+                    {days} ngày {days > 1 ? `${days - 1} đêm` : ""}
+                  </option>
+                ))}
               </select>
-            </label>
-            <label className="font-mono grid min-h-14 gap-1 border-2 border-black bg-white px-3 py-2 text-[9px] font-medium tracking-[0.1em] uppercase focus-within:outline-3 focus-within:outline-offset-3 focus-within:outline-black">
-              Ngân sách
+            </div>
+
+            <div className="flex flex-col justify-center rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-2.5">
+              <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                Ngân sách dự kiến
+              </label>
               <select
                 value={budgetRange}
                 onChange={(event) => setBudgetRange(event.target.value)}
-                className="min-w-0 bg-transparent text-xs font-semibold normal-case outline-none"
+                className="w-full bg-transparent text-sm font-semibold text-slate-900 outline-none cursor-pointer"
               >
                 <option value="none">Chưa chọn</option>
                 <option value="under-1">Dưới 1 triệu VND</option>
@@ -165,41 +175,39 @@ export function HomeHero() {
                 <option value="5-10">5 – 10 triệu VND</option>
                 <option value="over-10">Trên 10 triệu VND</option>
               </select>
-            </label>
+            </div>
+
             <button
               type="submit"
-              className="font-mono min-h-14 border-2 border-black bg-black px-6 py-3 text-xs font-medium tracking-[0.14em] text-white uppercase hover:bg-white hover:text-black focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black"
+              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-sky-500 px-7 py-3.5 text-base font-bold text-white shadow-lg shadow-sky-500/25 hover:bg-sky-600 active:scale-98 transition-all"
             >
-              Lên kế hoạch{" "}
-              <span className="ml-3 text-base leading-none" aria-hidden="true">
-                →
+              <span>Tạo Lịch Trình</span>
+              <span className="text-lg" aria-hidden="true">
+                ➔
               </span>
             </button>
           </div>
 
-          <div className="mt-4 flex flex-col gap-3 border-t border-line pt-4 sm:flex-row sm:items-center sm:justify-between">
-            <p className="font-mono text-[10px] font-medium tracking-[0.1em] text-muted uppercase">
-              Hoặc, để AI tìm một điểm đến gần bạn
-            </p>
+          <div className="mt-6 flex flex-col gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:items-center sm:justify-between text-xs">
+            <span className="text-slate-500 font-medium">
+              Hoặc để AI tìm ý tưởng chuyến đi quanh vị trí của bạn:
+            </span>
             <button
               type="button"
               onClick={requestLocation}
               disabled={isRequesting}
-              className="font-mono min-h-11 w-full border-b-2 border-black px-1 py-2 text-left text-[10px] font-medium tracking-[0.12em] uppercase hover:bg-black hover:px-3 hover:text-white focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black disabled:cursor-wait disabled:opacity-60 sm:w-auto"
+              className="inline-flex items-center gap-1.5 font-bold text-sky-600 hover:text-sky-700 transition-colors disabled:opacity-60"
             >
-              {isRequesting ? "Đang xin quyền vị trí" : "Dùng vị trí hiện tại"}{" "}
-              <span className="ml-3 text-base leading-none" aria-hidden="true">
-                →
-              </span>
+              <span>📍 {isRequesting ? "Đang lấy vị trí..." : "Dùng vị trí hiện tại"}</span>
+              <span aria-hidden="true">→</span>
             </button>
           </div>
         </form>
 
-        <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between text-xs text-slate-500">
           {!user && status !== "loading" ? (
-            <p className="font-mono max-w-2xl text-[10px] leading-5 font-medium tracking-[0.1em] text-muted uppercase">
-              Chế độ khách: lịch trình không được lưu, không thể tùy chỉnh và
-              chỉ có một lượt tạo trong 24 giờ.
+            <p className="rounded-xl bg-amber-50 px-4 py-2 text-amber-800 border border-amber-200">
+              ⚡ <strong>Chế độ khách:</strong> Lịch trình xem thử. Hãy đăng nhập Google để lưu & chỉnh sửa chuyến đi riêng của bạn.
             </p>
           ) : (
             <span />
@@ -209,26 +217,25 @@ export function HomeHero() {
               type="button"
               onClick={() => signIn("/")}
               disabled={status === "loading"}
-              className="font-mono min-h-11 shrink-0 border-2 border-black px-5 py-3 text-xs font-medium tracking-[0.14em] uppercase hover:bg-black hover:text-white focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black disabled:cursor-wait disabled:opacity-60"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-800 shadow-sm hover:bg-slate-50 transition-all disabled:opacity-60"
             >
-              Đăng nhập Google{" "}
-              <span className="ml-3 text-base leading-none" aria-hidden="true">
-                ↗
-              </span>
+              <span>Đăng nhập Google</span>
+              <span aria-hidden="true">↗</span>
             </button>
           )}
         </div>
       </div>
+
       {(locationError || authError) && (
         <div
           role="alert"
-          className="font-mono fixed right-5 bottom-5 z-50 max-w-sm border-2 border-black bg-black px-5 py-4 text-xs font-medium tracking-[0.08em] text-white uppercase sm:right-8 sm:bottom-8"
+          className="fixed right-5 bottom-5 z-50 flex max-w-sm items-center justify-between gap-4 rounded-2xl bg-slate-900 px-5 py-4 text-xs font-semibold text-white shadow-2xl"
         >
-          {locationError ?? authError}
+          <span>{locationError ?? authError}</span>
           <button
             type="button"
             onClick={clearErrors}
-            className="ml-5 border-b border-white pb-0.5 text-[10px] focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-white"
+            className="rounded-lg bg-slate-800 px-2.5 py-1 text-[11px] text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
           >
             Đóng
           </button>

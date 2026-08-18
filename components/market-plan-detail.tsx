@@ -78,10 +78,10 @@ export function MarketPlanDetail({
 
   if (isLoading) {
     return (
-      <section className="texture-grid grid min-h-80 place-items-center border-2 border-black px-6 py-12 text-center" aria-live="polite" role="status">
-        <div>
-          <p className="font-mono text-[10px] font-medium tracking-[0.14em] uppercase">Market Plan</p>
-          <p className="font-display mt-4 text-3xl leading-tight tracking-tight sm:text-5xl">Đang mở itinerary...</p>
+      <section className="rounded-3xl border border-slate-200 bg-white p-12 text-center shadow-sm" aria-live="polite" role="status">
+        <div className="flex flex-col items-center justify-center gap-3">
+          <span className="h-8 w-8 animate-spin rounded-full border-4 border-sky-500 border-t-transparent" />
+          <p className="text-sm font-bold text-slate-700">Đang tải lịch trình chi tiết...</p>
         </div>
       </section>
     )
@@ -89,32 +89,55 @@ export function MarketPlanDetail({
 
   if (!plan || error) {
     return (
-      <section className="texture-grid border-2 border-black p-8 sm:p-12" role="alert">
-        <p className="font-mono text-[10px] font-medium tracking-[0.14em] uppercase">Không thể mở plan</p>
-        <h1 className="font-display mt-5 max-w-2xl text-4xl leading-[0.9] tracking-tight sm:text-6xl">Plan này đã được gỡ khỏi Market hoặc không tồn tại.</h1>
-        {error && <p className="mt-5 max-w-xl leading-7 text-muted">{error}</p>}
-        <a href="/market" className="font-mono mt-8 inline-flex min-h-11 items-center border-2 border-black bg-black px-5 py-3 text-[10px] font-medium tracking-[0.12em] text-white uppercase hover:bg-white hover:text-black focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black">Về Market Plan ←</a>
+      <section className="rounded-3xl border border-slate-200 bg-white p-8 sm:p-12 shadow-sm text-center" role="alert">
+        <span className="text-4xl">⛵</span>
+        <h1 className="mt-4 text-2xl font-bold text-slate-900">Plan này không tồn tại hoặc đã gỡ</h1>
+        {error && <p className="mt-2 text-xs text-slate-500">{error}</p>}
+        <div className="mt-6">
+          <a href="/market" className="inline-flex items-center gap-2 rounded-2xl bg-sky-500 px-6 py-3 text-xs font-bold text-white shadow-md hover:bg-sky-600 transition-all">
+            <span>← Quay lại Market Plan</span>
+          </a>
+        </div>
       </section>
     )
   }
 
   return (
-    <section>
-      <a href="/market" className="font-mono mb-8 inline-flex min-h-11 items-center border-b-2 border-black py-2 text-[10px] font-medium tracking-[0.12em] uppercase hover:bg-black hover:px-2 hover:text-white focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black">← Tất cả Market Plan</a>
-      <div className="mb-8 flex flex-wrap items-center gap-x-4 gap-y-3 border-y-2 border-black py-4">
-        {plan.author.avatarUrl ? (
-          <img src={plan.author.avatarUrl} alt="" className="h-10 w-10 border border-black object-cover" referrerPolicy="no-referrer" />
-        ) : (
-          <span className="font-mono grid h-10 w-10 place-items-center border border-black text-[10px] font-medium" aria-hidden="true">{plan.author.name.slice(0, 1).toUpperCase()}</span>
-        )}
-        <p className="text-sm">Chia sẻ bởi <span className="font-medium">{plan.author.name}</span></p>
-        <span className="font-mono text-[10px] font-medium tracking-[0.1em] text-muted uppercase">Đăng {formatDate(plan.publishedAt)}</span>
-        <button type="button" onClick={() => void handleClone()} disabled={isCloning || status === 'loading'} className="font-mono min-h-11 border-2 border-black bg-black px-4 py-2 text-[10px] font-medium tracking-[0.1em] text-white uppercase hover:bg-white hover:text-black disabled:cursor-wait disabled:opacity-60">
-          {isCloning ? 'Đang sao chép...' : user ? 'Sao chép plan' : 'Đăng nhập để sao chép'}
-        </button>
-        {cloneError && <p role="alert" className="w-full text-sm leading-6">{cloneError}</p>}
+    <section className="py-8">
+      <a href="/market" className="inline-flex items-center gap-2 text-xs font-bold text-sky-600 hover:text-sky-700 transition-colors mb-6">
+        <span>← Quay lại tất cả Market Plan</span>
+      </a>
+
+      {/* Author & Actions Card */}
+      <div className="mb-8 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex items-center gap-3">
+          {plan.author.avatarUrl ? (
+            <img src={plan.author.avatarUrl} alt="" className="h-12 w-12 rounded-full border border-sky-200 object-cover shadow-sm" referrerPolicy="no-referrer" />
+          ) : (
+            <span className="grid h-12 w-12 place-items-center rounded-full bg-sky-500 text-sm font-bold text-white shadow-sm" aria-hidden="true">
+              {plan.author.name.slice(0, 1).toUpperCase()}
+            </span>
+          )}
+          <div>
+            <p className="text-sm font-bold text-slate-900">Plan của {plan.author.name}</p>
+            <p className="text-xs text-slate-500">Đã đăng ngày {formatDate(plan.publishedAt)}</p>
+          </div>
+        </div>
+
+        <div className="flex flex-col sm:items-end gap-2">
+          <button
+            type="button"
+            onClick={() => void handleClone()}
+            disabled={isCloning || status === 'loading'}
+            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-sky-500 px-6 py-3.5 text-xs font-bold text-white shadow-md shadow-sky-500/20 hover:bg-sky-600 active:scale-98 transition-all disabled:opacity-60"
+          >
+            <span>{isCloning ? 'Đang sao chép...' : user ? 'Sao chép về Plan của tôi 📋' : 'Đăng nhập để sao chép'}</span>
+          </button>
+          {cloneError && <p role="alert" className="text-xs text-rose-500">{cloneError}</p>}
+        </div>
       </div>
-      <ItineraryTimeline itinerary={plan.itinerary} eyebrow="Plan cộng đồng" />
+
+      <ItineraryTimeline itinerary={plan.itinerary} eyebrow="Plan Cộng Đồng" />
     </section>
   )
 }

@@ -1,25 +1,53 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-page: #ffffff;
-  --color-ink: #000000;
-  --color-surface: #f7f7f6;
-  --color-muted: #454545;
-  --color-line: #d4d4d0;
+  --font-sans: 'Plus Jakarta Sans', var(--font-sans), system-ui, -apple-system, sans-serif;
+  
+  --color-primary: #0EA5E9;
+  --color-primary-hover: #0284C7;
+  --color-primary-active: #0369A1;
+  --color-primary-light: #E0F2FE;
+  --color-primary-soft: #F0F9FF;
+
+  --color-secondary: #38BDF8;
+  --color-secondary-light: #EAF8FF;
+
+  --color-accent: #FF7A59;
+  --color-accent-hover: #F76848;
+  --color-accent-light: #FFF0EB;
+
+  --color-success: #22C55E;
+  --color-success-light: #DCFCE7;
+
+  --color-warning: #F59E0B;
+  --color-warning-light: #FEF3C7;
+
+  --color-error: #EF4444;
+  --color-error-light: #FEE2E2;
+
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94A3B8;
+
+  --color-background: #F8FBFD;
+  --color-background-secondary: #F0F9FF;
+
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #F8FCFF;
+
+  --color-border: #E2E8F0;
+  --color-border-hover: #BAE6FD;
 }
 
 :root {
-  color: #000000;
-  background: #ffffff;
+  color: #0F172A;
+  background-color: #F8FBFD;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
 
-* {
-  border-radius: 0;
-}
-
 html {
+  font-family: 'Plus Jakarta Sans', var(--font-sans), sans-serif;
   scroll-behavior: smooth;
 }
 
@@ -27,68 +55,67 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  color: #000000;
-  background-color: #ffffff;
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 3px,
-    rgb(0 0 0 / 0.018) 3px,
-    rgb(0 0 0 / 0.018) 4px
-  );
-  font-family: var(--font-body), Georgia, serif;
-  line-height: 1.5;
+  color: #0F172A;
+  background-color: #F8FBFD;
+  font-family: 'Plus Jakarta Sans', var(--font-sans), sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
+/* Ensure ALL form controls inherit Plus Jakarta Sans */
 button,
 input,
 select,
-textarea {
-  font: inherit;
+textarea,
+label,
+span,
+p,
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Plus Jakarta Sans', var(--font-sans), sans-serif !important;
 }
 
 ::selection {
   color: #ffffff;
-  background: #000000;
+  background: #0EA5E9;
 }
 
-.font-display {
-  font-family: var(--font-display), Georgia, serif;
-}
-
-.font-body {
-  font-family: var(--font-body), Georgia, serif;
-}
-
+/* Alias classes to maintain backward compatibility while forcing single font */
+.font-display,
+.font-body,
 .font-mono {
-  font-family: var(--font-mono), ui-monospace, monospace;
+  font-family: 'Plus Jakarta Sans', var(--font-sans), sans-serif !important;
 }
 
-.texture-grid {
-  background-image:
-    linear-gradient(rgb(0 0 0 / 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(0 0 0 / 0.055) 1px, transparent 1px);
-  background-size: 40px 40px;
+/* Modern Travel Styling Utilities */
+.travel-card {
+  background-color: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.texture-diagonal {
-  background-image: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 40px,
-    rgb(0 0 0 / 0.045) 40px,
-    rgb(0 0 0 / 0.045) 42px
-  );
+.travel-card:hover {
+  transform: translateY(-3px);
+  border-color: #BAE6FD;
+  box-shadow: 0 12px 28px rgba(14, 165, 233, 0.12);
 }
 
-.texture-invert {
-  background-image: repeating-linear-gradient(
-    90deg,
-    transparent,
-    transparent 3px,
-    rgb(255 255 255 / 0.055) 3px,
-    rgb(255 255 255 / 0.055) 4px
-  );
+.travel-glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, #0EA5E9 0%, #38BDF8 50%, #67E8F9 100%);
+}
+
+.hero-gradient-text {
+  background: linear-gradient(135deg, #0F172A 0%, #0284C7 60%, #0EA5E9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -96,7 +123,7 @@ textarea {
     scroll-behavior: auto;
   }
 
-  .animate-pulse {
-    animation: none;
+  .travel-card:hover {
+    transform: none;
   }
 }

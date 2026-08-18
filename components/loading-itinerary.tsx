@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react'
 
 const loadingMessages = [
-  'Đang phân tích tọa độ của bạn...',
-  'Đang tìm kiếm các địa điểm ăn uống thú vị...',
-  'Đang sắp xếp lộ trình di chuyển tối ưu...',
-  'Sắp xong rồi, chờ một chút nhé...',
+  'Đang phân tích vị trí & địa hình...',
+  'Đang tìm kiếm các điểm dừng ẩm thực & check-in tuyệt vời...',
+  'Đang sắp xếp lộ trình di chuyển tối ưu nhất...',
+  'Đang hoàn thiện lịch trình cho bạn, chờ một chút nhé...',
 ]
 
 export function LoadingItinerary({ overlay = false }: { overlay?: boolean }) {
@@ -15,26 +15,37 @@ export function LoadingItinerary({ overlay = false }: { overlay?: boolean }) {
   useEffect(() => {
     const timer = window.setInterval(() => {
       setMessageIndex((current) => (current + 1) % loadingMessages.length)
-    }, 2000)
+    }, 2200)
 
     return () => window.clearInterval(timer)
   }, [])
 
   return (
     <section
-      className={`texture-grid grid min-h-80 place-items-center border-2 border-black bg-white px-6 py-10 text-center ${overlay ? 'absolute inset-0 z-10 min-h-0 bg-white/95' : ''}`}
+      className={`rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm flex flex-col items-center justify-center min-h-[320px] ${
+        overlay ? 'absolute inset-0 z-20 bg-white/95 backdrop-blur-sm' : ''
+      }`}
       role="status"
       aria-live="polite"
     >
-      <div className="w-full max-w-md">
-        <p className="font-mono text-[10px] font-medium tracking-[0.16em] uppercase">PlanRCM đang dựng hành trình</p>
-        <p className="font-display mt-5 min-h-24 text-3xl leading-tight tracking-tight sm:text-4xl">
+      <div className="w-full max-w-md flex flex-col items-center">
+        <div className="relative mb-6">
+          <span className="h-12 w-12 animate-spin rounded-full border-4 border-sky-500 border-t-transparent inline-block" />
+          <span className="absolute inset-0 grid place-items-center text-lg">✈️</span>
+        </div>
+
+        <span className="text-xs font-bold uppercase tracking-wider text-sky-600">
+          PlanRCM AI đang khởi tạo
+        </span>
+
+        <p className="mt-3 min-h-[60px] text-lg font-bold text-slate-900 leading-snug sm:text-xl">
           {loadingMessages[messageIndex]}
         </p>
-        <div className="mt-8 space-y-3" aria-hidden="true">
-          <span className="block h-3 w-full animate-pulse bg-black/15" />
-          <span className="block h-3 w-5/6 animate-pulse bg-black/15 [animation-delay:200ms]" />
-          <span className="block h-3 w-2/3 animate-pulse bg-black/15 [animation-delay:400ms]" />
+
+        <div className="mt-6 w-full space-y-2.5" aria-hidden="true">
+          <span className="block h-3.5 w-full animate-pulse rounded-full bg-sky-100" />
+          <span className="block h-3.5 w-4/5 animate-pulse rounded-full bg-slate-100 mx-auto" />
+          <span className="block h-3.5 w-3/5 animate-pulse rounded-full bg-slate-100 mx-auto" />
         </div>
       </div>
     </section>

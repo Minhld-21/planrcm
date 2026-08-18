@@ -1,7 +1,7 @@
 const packages = [
-  { value: 'foodie', label: 'Thích Ăn Uống' },
-  { value: 'photo', label: 'Sống Ảo' },
-  { value: 'relax', label: 'Nhịp Độ Chậm' },
+  { value: 'foodie', label: '🍜 Thích Ăn Uống' },
+  { value: 'photo', label: '📸 Sống Ảo & Check-in' },
+  { value: 'relax', label: '☕ Nhịp Độ Chậm' },
 ]
 
 type PackageSelectorProps = {
@@ -28,22 +28,32 @@ export function PackageSelector({
   }
 
   return (
-    <section className="border-y-2 border-black py-6" aria-labelledby="package-heading">
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+    <section className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm" aria-labelledby="package-heading">
+      <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
         <div>
-          <p className="font-mono text-xs font-medium tracking-[0.16em] uppercase">Tinh chỉnh hành trình</p>
-          <h2 id="package-heading" className="font-display mt-3 text-3xl leading-none tracking-tight">Chọn hương vị cho chuyến đi.</h2>
+          <span className="text-xs font-bold uppercase tracking-wider text-sky-600">02 / Phong cách chuyến đi</span>
+          <h2 id="package-heading" className="mt-1 text-2xl font-bold text-slate-900">Chọn hương vị cho chuyến đi của bạn.</h2>
         </div>
         <button
           type="button"
           onClick={onRegenerate}
           disabled={isLoading || disabled}
-          className="font-mono min-h-11 w-full border-2 border-black bg-black px-5 py-3 text-xs font-medium tracking-[0.12em] text-white uppercase transition-none hover:bg-white hover:text-black focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-black disabled:hover:text-white sm:w-auto"
+          className="inline-flex items-center justify-center gap-2 rounded-2xl bg-sky-500 px-6 py-3.5 text-sm font-semibold text-white shadow-md shadow-sky-500/20 hover:bg-sky-600 active:scale-98 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isLoading ? 'Đang cập nhật' : 'Tạo lại lịch trình'} <span className="ml-2" aria-hidden="true">↻</span>
+          {isLoading ? (
+            <>
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              <span>Đang tính toán lại...</span>
+            </>
+          ) : (
+            <>
+              <span>Cập nhật lịch trình</span>
+              <span aria-hidden="true">↻</span>
+            </>
+          )}
         </button>
       </div>
-      <div className="mt-5 grid gap-2 sm:flex sm:flex-wrap" aria-label="Package tùy chọn">
+      <div className="mt-6 flex flex-wrap gap-3" aria-label="Package tùy chọn">
         {packages.map((item) => {
           const isSelected = selectedPackages.includes(item.value)
 
@@ -54,9 +64,14 @@ export function PackageSelector({
               onClick={() => togglePackage(item.value)}
               disabled={disabled}
               aria-pressed={isSelected}
-              className={`font-mono min-h-11 border-2 border-black px-4 py-2 text-[10px] font-medium tracking-[0.1em] uppercase transition-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-50 ${isSelected ? 'bg-black text-white' : 'bg-white text-black hover:bg-black hover:text-white'}`}
+              className={`inline-flex items-center gap-2 rounded-2xl px-5 py-3 text-xs font-bold transition-all disabled:opacity-50 ${
+                isSelected
+                  ? 'bg-sky-500 text-white shadow-md shadow-sky-500/20'
+                  : 'border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 hover:border-slate-300'
+              }`}
             >
-              {isSelected ? '✓ ' : '+ '}{item.label}
+              <span>{isSelected ? '✓' : '+'}</span>
+              <span>{item.label}</span>
             </button>
           )
         })}

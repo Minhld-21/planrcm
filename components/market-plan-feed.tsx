@@ -56,7 +56,7 @@ function AuthorMark({ author }: { author: PublicPlanSummary["author"] }) {
       <img
         src={author.avatarUrl}
         alt=""
-        className="h-9 w-9 border border-black object-cover"
+        className="h-8 w-8 rounded-full border border-sky-200 object-cover shadow-sm"
         referrerPolicy="no-referrer"
       />
     );
@@ -64,7 +64,7 @@ function AuthorMark({ author }: { author: PublicPlanSummary["author"] }) {
 
   return (
     <span
-      className="font-mono grid h-9 w-9 place-items-center border border-black text-[10px] font-medium"
+      className="grid h-8 w-8 place-items-center rounded-full bg-sky-500 text-xs font-bold text-white shadow-sm"
       aria-hidden="true"
     >
       {author.name.slice(0, 1).toUpperCase()}
@@ -218,203 +218,214 @@ export function MarketPlanFeed({
   }, [distances, plans, searchPlace]);
 
   return (
-    <section
-      aria-labelledby="market-feed-title"
-      className="border-t-4 border-black"
-    >
-      <div className="grid border-b-2 border-black lg:grid-cols-12">
-        <div className="texture-diagonal border-b-2 border-black px-5 py-10 sm:px-8 lg:col-span-4 lg:border-r-2 lg:border-b-0 lg:px-12 lg:py-16">
-          <p className="font-mono text-[10px] font-medium tracking-[0.16em] uppercase">
-            Market Plan
-          </p>
-          <h1
-            id="market-feed-title"
-            className="font-display mt-5 text-5xl leading-[0.86] tracking-tight sm:text-6xl"
-          >
-            Đi bằng kinh nghiệm của nhau.
-          </h1>
-        </div>
-        <div className="flex flex-col items-start justify-end px-5 py-10 sm:px-8 lg:col-span-8 lg:px-12 lg:py-16">
-          <p className="max-w-2xl text-lg leading-8 text-muted">
-            Những itinerary được chủ nhân tự nguyện chia sẻ. Mỗi plan có địa
-            điểm, nhịp điệu và bản đồ để bạn tham khảo trước chuyến đi.
-          </p>
+    <section aria-labelledby="market-feed-title" className="py-10 lg:py-16">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12">
+        {/* Header Banner */}
+        <div className="rounded-3xl bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 p-8 text-white shadow-xl shadow-sky-500/15 sm:p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div className="max-w-2xl">
+            <span className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3.5 py-1 text-xs font-bold text-white backdrop-blur-md">
+              🌏 Market Plan Du Lịch
+            </span>
+            <h1
+              id="market-feed-title"
+              className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl"
+            >
+              Khám phá trải nghiệm từ cộng đồng.
+            </h1>
+            <p className="mt-3 text-sm text-white/90 leading-relaxed">
+              Những lịch trình du lịch thực tế được chia sẻ bởi người dùng. Tham khảo ý tưởng, nhịp điệu và các điểm dừng chân tuyệt vời.
+            </p>
+          </div>
           <a
             href="/#tao-ke-hoach"
-            className="font-mono mt-7 inline-flex min-h-11 items-center border-2 border-black bg-black px-5 py-3 text-[10px] font-medium tracking-[0.12em] text-white uppercase hover:bg-white hover:text-black focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black"
+            className="inline-flex shrink-0 items-center gap-2 rounded-2xl bg-white px-6 py-3.5 text-sm font-bold text-sky-600 shadow-md hover:bg-sky-50 active:scale-98 transition-all"
           >
-            Tạo plan của bạn{" "}
-            <span className="ml-3 text-base leading-none" aria-hidden="true">
-              →
-            </span>
+            <span>Tạo Plan Của Bạn</span>
+            <span aria-hidden="true">→</span>
           </a>
         </div>
-      </div>
 
-      <section
-        className="border-b-2 border-black bg-surface px-5 py-6 sm:px-8 lg:px-12 lg:py-8"
-        aria-label="Tìm plan theo địa điểm"
-      >
-        <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
-          <div>
-            <p className="font-mono text-[10px] font-medium tracking-[0.14em] uppercase">
-              Tìm theo địa điểm
-            </p>
-            <h2 className="font-display mt-2 text-3xl leading-none tracking-tight sm:text-4xl">
-              Xem plan nào gần địa điểm bạn chọn.
-            </h2>
-          </div>
-          <button
-            type="button"
-            onClick={locateUser}
-            disabled={isLocating || isRouting}
-            className="font-mono min-h-11 border-2 border-black bg-white px-4 py-2 text-[10px] font-medium tracking-[0.1em] uppercase hover:bg-black hover:text-white focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-black disabled:cursor-wait disabled:opacity-60"
-          >
-            {isLocating ? "Đang xác thực vị trí" : "Gần vị trí hiện tại"} ↗
-          </button>
-        </div>
-        <PlaceAutocomplete
-          id="market-place-search"
-          label="Địa điểm để tìm Market Plan"
-          value={searchValue}
-          onChange={(value) => {
-            setSearchValue(value);
-            setSearchPlace(null);
-            setDistances(new Map());
-            setRouteError(null);
-          }}
-          onSelect={handlePlaceSelect}
-          placeholder="Nhập tỉnh, thành phố hoặc địa điểm"
-          className="mt-5 max-w-3xl"
-        />
-        {isRouting && (
-          <p
-            role="status"
-            className="font-mono mt-3 text-[10px] font-medium tracking-[0.1em] text-muted uppercase"
-          >
-            Đang tính quãng đường...
-          </p>
-        )}
-        {searchPlace && !isRouting && !routeError && (
-          <p
-            role="status"
-            className="font-mono mt-3 text-[10px] font-medium tracking-[0.1em] text-muted uppercase"
-          >
-            Đang sắp theo quãng đường ước lượng từ{" "}
-            {searchPlace.formattedAddress ?? searchPlace.name} · Gemini
-          </p>
-        )}
-        {routeError && (
-          <p role="alert" className="mt-3 max-w-3xl text-sm leading-6">
-            {routeError}
-          </p>
-        )}
-        <p className="font-mono mt-3 text-[9px] font-medium tracking-[0.1em] text-muted uppercase">
-          Dữ liệu địa điểm và quãng đường · Gemini ước lượng
-        </p>
-      </section>
-
-      {isLoading && (
-        <div
-          className="grid gap-0 md:grid-cols-2 xl:grid-cols-3"
-          aria-label="Đang tải Market Plan"
+        {/* Filter & Search Bar */}
+        <section
+          className="mt-8 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+          aria-label="Tìm plan theo địa điểm"
         >
-          {Array.from({ length: 6 }, (_, index) => (
-            <div
-              key={index}
-              className="min-h-72 border-r-2 border-b-2 border-black bg-surface p-6 animate-pulse sm:p-8"
-            >
-              <div className="h-3 w-24 bg-black/15" />
-              <div className="mt-12 h-12 max-w-72 bg-black/15" />
-              <div className="mt-4 h-3 w-40 bg-black/15" />
-              <div className="mt-12 h-10 w-32 bg-black/15" />
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-wider text-sky-600">Tìm kiếm theo khoảng cách</span>
+              <h2 className="text-xl font-bold text-slate-900 mt-0.5">
+                Xem lịch trình gần địa điểm bạn chọn
+              </h2>
             </div>
-          ))}
-        </div>
-      )}
+            <button
+              type="button"
+              onClick={locateUser}
+              disabled={isLocating || isRouting}
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-100 hover:border-slate-300 transition-all disabled:opacity-60"
+            >
+              <span>📍 {isLocating ? "Đang xác thực vị trí..." : "Gần vị trí hiện tại"}</span>
+              <span aria-hidden="true">↗</span>
+            </button>
+          </div>
 
-      {!isLoading && error && (
-        <div role="alert" className="border-b-2 border-black p-6 sm:p-8">
-          <p className="font-mono text-[10px] font-medium tracking-[0.14em] uppercase">
-            Không thể tải Market Plan
-          </p>
-          <p className="mt-3 max-w-2xl leading-7 text-muted">{error}</p>
-        </div>
-      )}
+          <PlaceAutocomplete
+            id="market-place-search"
+            label="Địa điểm để tìm Market Plan"
+            value={searchValue}
+            onChange={(value) => {
+              setSearchValue(value);
+              setSearchPlace(null);
+              setDistances(new Map());
+              setRouteError(null);
+            }}
+            onSelect={handlePlaceSelect}
+            placeholder="Nhập vị trí tham chiếu (VD: Sài Gòn, Hà Nội)..."
+            className="mt-4 max-w-2xl"
+            inputClassName="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-sky-100 transition-all"
+          />
 
-      {!isLoading && !error && orderedPlans.length === 0 && (
-        <div className="texture-grid border-b-2 border-black px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
-          <p className="font-mono text-[10px] font-medium tracking-[0.14em] uppercase">
-            Market đang mở
-          </p>
-          <h2 className="font-display mt-5 max-w-2xl text-4xl leading-[0.9] tracking-tight sm:text-6xl">
-            Chưa có plan nào được chia sẻ.
-          </h2>
-          <p className="mt-5 max-w-xl leading-7 text-muted">
-            Hãy tạo một lịch trình, đăng nhập Google và bật chia sẻ để là người
-            đầu tiên đóng góp.
-          </p>
-        </div>
-      )}
+          {isRouting && (
+            <p role="status" className="mt-3 text-xs font-semibold text-sky-600">
+              ⚡ Đang tính khoảng cách từ vị trí của bạn...
+            </p>
+          )}
+          {searchPlace && !isRouting && !routeError && (
+            <p role="status" className="mt-3 text-xs font-semibold text-slate-600">
+              📍 Đang sắp xếp danh sách theo khoảng cách từ{" "}
+              <strong className="text-sky-600">{searchPlace.formattedAddress ?? searchPlace.name}</strong>
+            </p>
+          )}
+          {routeError && (
+            <p role="alert" className="mt-3 text-xs font-medium text-rose-500">
+              {routeError}
+            </p>
+          )}
+        </section>
 
-      {!isLoading && !error && orderedPlans.length > 0 && (
-        <div className="grid md:grid-cols-2 xl:grid-cols-3">
-          {orderedPlans.map((plan) => {
-            const route = distances.get(plan.id);
-
-            return (
-              <article
-                key={plan.id}
-                className="group flex min-h-80 flex-col border-r-2 border-b-2 border-black bg-white p-5 transition-colors duration-100 hover:bg-black hover:text-white sm:p-7"
+        {/* Loading Skeletons */}
+        {isLoading && (
+          <div
+            className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+            aria-label="Đang tải Market Plan"
+          >
+            {Array.from({ length: 6 }, (_, index) => (
+              <div
+                key={index}
+                className="h-80 rounded-3xl border border-slate-200 bg-white p-6 animate-pulse"
               >
-                <div className="flex items-start justify-between gap-4">
-                  <p className="font-mono text-[10px] font-medium tracking-[0.14em] uppercase">
-                    {plan.totalDays} ngày · {Math.max(plan.totalDays - 1, 0)}{" "}
-                    đêm
-                  </p>
-                  <span className="font-mono border border-current px-2 py-1 text-[9px] font-medium tracking-[0.1em] uppercase">
-                    Đã chia sẻ
-                  </span>
-                </div>
-                <h2 className="font-display mt-10 text-4xl leading-[0.9] tracking-tight sm:text-5xl">
-                  {plan.destination}
-                </h2>
-                <p className="font-mono mt-5 text-[10px] font-medium tracking-[0.1em] text-muted uppercase transition-colors group-hover:text-white/70">
-                  {plan.theme.length > 0
-                    ? plan.theme.join(" / ")
-                    : "Hành trình tự do"}
-                </p>
-                {route && (
-                  <p className="font-mono mt-4 w-fit border border-current px-2 py-1 text-[9px] font-medium tracking-[0.08em] uppercase">
-                    {formatDistance(route.distanceMeters)} ·{" "}
-                    {formatDuration(route.durationSeconds)} ước lượng Gemini
-                  </p>
-                )}
-                <div className="mt-auto flex items-end justify-between gap-4 border-t border-current pt-5">
-                  <div className="flex min-w-0 items-center gap-3">
-                    <AuthorMark author={plan.author} />
-                    <div className="min-w-0">
-                      <p className="truncate text-sm font-medium">
-                        {plan.author.name}
-                      </p>
-                      <p className="font-mono mt-1 text-[9px] font-medium tracking-[0.08em] text-muted uppercase transition-colors group-hover:text-white/70">
-                        {formatDate(plan.publishedAt)}
-                      </p>
+                <div className="h-4 w-24 rounded-lg bg-slate-200" />
+                <div className="mt-8 h-10 w-48 rounded-xl bg-slate-200" />
+                <div className="mt-4 h-4 w-32 rounded-lg bg-slate-200" />
+                <div className="mt-16 h-10 w-full rounded-2xl bg-slate-200" />
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Error State */}
+        {!isLoading && error && (
+          <div role="alert" className="mt-8 rounded-3xl border border-rose-200 bg-rose-50/50 p-8 text-center">
+            <h3 className="text-lg font-bold text-rose-900">Không thể tải danh sách Market Plan</h3>
+            <p className="mt-2 text-xs text-rose-700">{error}</p>
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!isLoading && !error && orderedPlans.length === 0 && (
+          <div className="mt-8 rounded-3xl border border-slate-200 bg-white p-12 text-center shadow-sm">
+            <span className="text-4xl">🏝️</span>
+            <h3 className="mt-4 text-2xl font-bold text-slate-900">Chưa có lịch trình nào được chia sẻ</h3>
+            <p className="mt-2 text-sm text-slate-500 max-w-md mx-auto">
+              Hãy là người đầu tiên đăng nhập và chia sẻ kế hoạch du lịch của bạn với cộng đồng!
+            </p>
+            <a
+              href="/#tao-ke-hoach"
+              className="mt-6 inline-flex items-center gap-2 rounded-2xl bg-sky-500 px-6 py-3 text-xs font-bold text-white shadow-md hover:bg-sky-600 transition-all"
+            >
+              <span>Tạo Plan Đầu Tiên</span>
+              <span>→</span>
+            </a>
+          </div>
+        )}
+
+        {/* Plan Cards Grid */}
+        {!isLoading && !error && orderedPlans.length > 0 && (
+          <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {orderedPlans.map((plan) => {
+              const route = distances.get(plan.id);
+
+              return (
+                <article
+                  key={plan.id}
+                  className="travel-card group flex flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-xl hover:border-sky-300 hover:-translate-y-1 transition-all"
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-3 py-1 text-xs font-bold text-sky-700 border border-sky-100">
+                        <span>🗓️</span>
+                        <span>{plan.totalDays} ngày {plan.totalDays > 1 ? `${plan.totalDays - 1} đêm` : ""}</span>
+                      </span>
+                      <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-500">
+                        Đã chia sẻ
+                      </span>
                     </div>
+
+                    <h2 className="mt-6 text-2xl font-extrabold tracking-tight text-slate-900 group-hover:text-sky-600 transition-colors line-clamp-2">
+                      {plan.destination}
+                    </h2>
+
+                    <div className="mt-3 flex flex-wrap gap-1.5">
+                      {plan.theme.length > 0 ? (
+                        plan.theme.map((tag) => (
+                          <span
+                            key={tag}
+                            className="rounded-lg bg-slate-100 px-2.5 py-1 text-[11px] font-medium text-slate-600"
+                          >
+                            #{tag}
+                          </span>
+                        ))
+                      ) : (
+                        <span className="rounded-lg bg-slate-100 px-2.5 py-1 text-[11px] font-medium text-slate-500">
+                          Hành trình tự do
+                        </span>
+                      )}
+                    </div>
+
+                    {route && (
+                      <div className="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-cyan-50 px-3 py-1.5 text-xs font-bold text-cyan-800 border border-cyan-100">
+                        <span>🚀 {formatDistance(route.distanceMeters)} ({formatDuration(route.durationSeconds)})</span>
+                      </div>
+                    )}
                   </div>
-                  <a
-                    href={`/market/${plan.id}`}
-                    className="font-mono shrink-0 border-b-2 border-current pb-1 text-[10px] font-medium tracking-[0.1em] uppercase focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-current"
-                    aria-label={`Xem plan ${plan.destination} của ${plan.author.name}`}
-                  >
-                    Xem ↗
-                  </a>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      )}
+
+                  <div className="mt-8 flex items-center justify-between border-t border-slate-100 pt-4">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <AuthorMark author={plan.author} />
+                      <div className="min-w-0">
+                        <p className="truncate text-xs font-bold text-slate-800">
+                          {plan.author.name}
+                        </p>
+                        <p className="text-[11px] text-slate-400">
+                          {formatDate(plan.publishedAt)}
+                        </p>
+                      </div>
+                    </div>
+
+                    <a
+                      href={`/market/${plan.id}`}
+                      className="inline-flex shrink-0 items-center gap-1 rounded-xl bg-sky-50 px-3.5 py-2 text-xs font-bold text-sky-600 hover:bg-sky-500 hover:text-white transition-all"
+                      aria-label={`Xem plan ${plan.destination} của ${plan.author.name}`}
+                    >
+                      <span>Xem Plan</span>
+                      <span>↗</span>
+                    </a>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </section>
   );
 }
