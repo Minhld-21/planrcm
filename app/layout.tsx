@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Plus_Jakarta_Sans } from 'next/font/google'
+import { Calistoga, Inter, JetBrains_Mono } from 'next/font/google'
 import type { ReactNode } from 'react'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteHeader } from '@/components/site-header'
@@ -8,11 +8,25 @@ import { LocationProvider } from '@/context/location-context'
 import { siteUrl } from '@/lib/site'
 import './globals.css'
 
-const jakarta = Plus_Jakarta_Sans({
+const calistoga = Calistoga({
+  subsets: ['latin'],
+  variable: '--font-display',
+  display: 'swap',
+  weight: ['400'],
+})
+
+const inter = Inter({
   subsets: ['latin', 'vietnamese'],
   variable: '--font-sans',
   display: 'swap',
-  weight: ['400', '500', '600', '700', '800'],
+  weight: ['400', '500', '600', '700'],
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+  weight: ['400', '500'],
 })
 
 export const metadata: Metadata = {
@@ -28,8 +42,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="vi" className={jakarta.variable}>
-      <body className="font-sans antialiased bg-[#F8FBFD] text-[#0F172A] min-h-screen flex flex-col selection:bg-sky-500 selection:text-white">
+    <html lang="vi" className={`${calistoga.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
+      <body className="font-sans antialiased bg-[#FAFAFA] text-[#0F172A] min-h-screen flex flex-col selection:bg-[#0052FF] selection:text-white">
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-sky-600 focus:text-white focus:rounded-xl focus:shadow-lg"

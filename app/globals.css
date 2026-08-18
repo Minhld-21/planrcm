@@ -1,53 +1,33 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-sans: 'Plus Jakarta Sans', var(--font-sans), system-ui, -apple-system, sans-serif;
-  
-  --color-primary: #0EA5E9;
-  --color-primary-hover: #0284C7;
-  --color-primary-active: #0369A1;
-  --color-primary-light: #E0F2FE;
-  --color-primary-soft: #F0F9FF;
+  --font-display: var(--font-display), Georgia, serif;
+  --font-sans: var(--font-sans), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-mono), monospace;
 
-  --color-secondary: #38BDF8;
-  --color-secondary-light: #EAF8FF;
+  --color-accent: #0052FF;
+  --color-accent-secondary: #4D7CFF;
+  --color-accent-foreground: #FFFFFF;
 
-  --color-accent: #FF7A59;
-  --color-accent-hover: #F76848;
-  --color-accent-light: #FFF0EB;
-
-  --color-success: #22C55E;
-  --color-success-light: #DCFCE7;
-
-  --color-warning: #F59E0B;
-  --color-warning-light: #FEF3C7;
-
-  --color-error: #EF4444;
-  --color-error-light: #FEE2E2;
-
-  --color-text-primary: #0F172A;
-  --color-text-secondary: #475569;
-  --color-text-muted: #94A3B8;
-
-  --color-background: #F8FBFD;
-  --color-background-secondary: #F0F9FF;
+  --color-foreground: #0F172A;
+  --color-background: #FAFAFA;
+  --color-muted: #F1F5F9;
+  --color-muted-foreground: #64748B;
 
   --color-surface: #FFFFFF;
-  --color-surface-hover: #F8FCFF;
-
   --color-border: #E2E8F0;
-  --color-border-hover: #BAE6FD;
+  --color-ring: #0052FF;
 }
 
 :root {
   color: #0F172A;
-  background-color: #F8FBFD;
+  background-color: #FAFAFA;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
 
 html {
-  font-family: 'Plus Jakarta Sans', var(--font-sans), sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
   scroll-behavior: smooth;
 }
 
@@ -56,49 +36,85 @@ body {
   min-height: 100vh;
   margin: 0;
   color: #0F172A;
-  background-color: #F8FBFD;
-  font-family: 'Plus Jakarta Sans', var(--font-sans), sans-serif;
+  background-color: #FAFAFA;
+  font-family: var(--font-sans), system-ui, sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Ensure ALL form controls inherit Plus Jakarta Sans */
-button,
-input,
-select,
-textarea,
-label,
-span,
-p,
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Plus Jakarta Sans', var(--font-sans), sans-serif !important;
-}
-
 ::selection {
   color: #ffffff;
-  background: #0EA5E9;
+  background: #0052FF;
 }
 
-/* Alias classes to maintain backward compatibility while forcing single font */
-.font-display,
-.font-body,
+/* Typography Font Classes */
+.font-display {
+  font-family: var(--font-display), Georgia, serif !important;
+}
+
+.font-sans {
+  font-family: var(--font-sans), system-ui, sans-serif !important;
+}
+
 .font-mono {
-  font-family: 'Plus Jakarta Sans', var(--font-sans), sans-serif !important;
+  font-family: var(--font-mono), monospace !important;
 }
 
-/* Modern Travel Styling Utilities */
+/* Design Tokens & Utilities for Minimalist Modern */
+
+.gradient-text {
+  background: linear-gradient(135deg, #0052FF 0%, #4D7CFF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-accent-gradient {
+  background: linear-gradient(135deg, #0052FF 0%, #4D7CFF 100%);
+}
+
+.gradient-border-card {
+  position: relative;
+  border-radius: 1.25rem;
+  background: linear-gradient(135deg, rgba(0, 82, 255, 0.4), rgba(77, 124, 255, 0.15));
+  padding: 1px;
+}
+
+.gradient-border-inner {
+  height: 100%;
+  width: 100%;
+  border-radius: calc(1.25rem - 1px);
+  background-color: #FFFFFF;
+}
+
+/* Shadow System */
+.shadow-accent {
+  box-shadow: 0 4px 14px rgba(0, 82, 255, 0.25);
+}
+
+.shadow-accent-lg {
+  box-shadow: 0 8px 24px rgba(0, 82, 255, 0.35);
+}
+
+/* Texture Patterns */
+.dot-pattern {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Minimalist Modern Travel Card */
 .travel-card {
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   border: 1px solid #E2E8F0;
   border-radius: 1.25rem;
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
-  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .travel-card:hover {
   transform: translateY(-3px);
-  border-color: #BAE6FD;
-  box-shadow: 0 12px 28px rgba(14, 165, 233, 0.12);
+  border-color: rgba(0, 82, 255, 0.3);
+  box-shadow: 0 16px 32px rgba(0, 82, 255, 0.12);
 }
 
 .travel-glass {
@@ -108,14 +124,33 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid rgba(226, 232, 240, 0.8);
 }
 
-.hero-gradient {
-  background: linear-gradient(135deg, #0EA5E9 0%, #38BDF8 50%, #67E8F9 100%);
+/* Animations */
+@keyframes pulseDot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.6;
+  }
 }
 
-.hero-gradient-text {
-  background: linear-gradient(135deg, #0F172A 0%, #0284C7 60%, #0EA5E9 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.animate-pulse-dot {
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+@keyframes floatBob {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: floatBob 4s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -125,5 +160,10 @@ h1, h2, h3, h4, h5, h6 {
 
   .travel-card:hover {
     transform: none;
+  }
+
+  .animate-pulse-dot,
+  .animate-float {
+    animation: none;
   }
 }

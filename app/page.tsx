@@ -47,56 +47,70 @@ const principles = [
 
 export default function Home() {
   return (
-    <main id="main-content" className="bg-[#F8FBFD] text-slate-900">
+    <main id="main-content" className="bg-[#FAFAFA] text-slate-900 font-sans">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
+      
+      {/* Hero Section */}
       <div className="relative z-20">
         <HomeHero />
       </div>
 
-      {/* Feature Section 01 */}
-      <section id="tao-ke-hoach" className="scroll-mt-10 py-16 lg:py-24">
+      {/* Feature Section 01 - Direction & Intelligence */}
+      <section id="tao-ke-hoach" className="scroll-mt-10 py-20 lg:py-28">
         <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12">
           <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-5">
-              <span className="text-xs font-bold uppercase tracking-wider text-sky-600">01 / Định hướng chuyến đi</span>
-              <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+              <div className="inline-flex items-center gap-2.5 rounded-full border border-[#0052FF]/30 bg-[#0052FF]/5 px-4 py-1 font-mono text-xs uppercase tracking-[0.15em] text-[#0052FF]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#0052FF]" />
+                <span>01 // Định hướng chuyến đi</span>
+              </div>
+
+              <h2 className="mt-4 font-display text-3xl sm:text-4xl font-normal tracking-tight text-slate-900 leading-tight">
                 Bắt đầu từ nơi bạn muốn đến.
               </h2>
+              
               <p className="mt-4 text-base leading-relaxed text-slate-600">
                 Nhập thành phố hoặc danh thắng bạn dự định khám phá. Trợ lý AI PlanRCM sẽ tự động phân tích vị trí và lên lịch trình di chuyển hợp lý nhất cho chuyến đi của bạn.
               </p>
-              <div className="mt-6">
+
+              <div className="mt-7">
                 <a
                   href="#main-content"
-                  className="inline-flex items-center gap-2 font-bold text-sky-600 hover:text-sky-700 transition-colors"
+                  className="inline-flex items-center gap-2 text-sm font-bold text-[#0052FF] hover:text-[#4D7CFF] transition-colors group"
                 >
                   <span>Chọn điểm đến ở đầu trang</span>
-                  <span>↑</span>
+                  <span className="group-hover:-translate-y-0.5 transition-transform">↑</span>
                 </a>
               </div>
             </div>
+
             <div className="lg:col-span-7">
-              <div className="travel-card rounded-3xl p-8 bg-white border border-slate-200 shadow-md">
-                <div className="flex items-center gap-4 border-b border-slate-100 pb-6">
-                  <div className="grid h-12 w-12 place-items-center rounded-2xl bg-sky-100 text-2xl text-sky-600">
-                    🏔️
+              {/* Feature card with gradient border stroke effect */}
+              <div className="gradient-border-card shadow-lg shadow-slate-900/5">
+                <div className="gradient-border-inner p-8 sm:p-10">
+                  <div className="flex items-center gap-4 border-b border-slate-100 pb-6">
+                    <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-[#0052FF] to-[#4D7CFF] text-2xl text-white shadow-accent">
+                      🏔️
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-slate-900 font-sans">Trải nghiệm du lịch thông minh</h3>
+                      <p className="text-xs text-slate-500 font-sans">Tự động hoá tối đa quy trình lập kế hoạch</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-slate-900">Trải nghiệm du lịch thông minh</h3>
-                    <p className="text-xs text-slate-500">Tiết kiệm thời gian lập kế hoạch thủ công</p>
-                  </div>
-                </div>
-                <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-2xl bg-sky-50/70 p-4 border border-sky-100">
-                    <span className="text-xs font-bold text-sky-700">📍 Đúng tọa độ địa lý</span>
-                    <p className="mt-1 text-xs text-slate-600 leading-relaxed">Các điểm dừng chân sắp xếp theo tuyến đường thuận tiện nhất.</p>
-                  </div>
-                  <div className="rounded-2xl bg-orange-50/70 p-4 border border-orange-100">
-                    <span className="text-xs font-bold text-orange-700">💰 Dự toán ngân sách</span>
-                    <p className="mt-1 text-xs text-slate-600 leading-relaxed">Tối ưu chi phí ăn ở, đi lại trong hạn mức bạn đã chọn.</p>
+
+                  <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                    <div className="rounded-2xl bg-slate-50 p-4.5 border border-slate-200/80 hover:border-[#0052FF]/30 transition-colors">
+                      <span className="text-xs font-bold text-[#0052FF] font-sans">📍 Đúng tọa độ địa lý</span>
+                      <p className="mt-1.5 text-xs text-slate-600 leading-relaxed font-sans">Các điểm dừng chân được sắp xếp tối ưu theo khoảng cách thực tế.</p>
+                    </div>
+
+                    <div className="rounded-2xl bg-slate-50 p-4.5 border border-slate-200/80 hover:border-[#0052FF]/30 transition-colors">
+                      <span className="text-xs font-bold text-[#0052FF] font-sans">💰 Dự toán ngân sách</span>
+                      <p className="mt-1.5 text-xs text-slate-600 leading-relaxed font-sans">Kiểm soát và tối ưu chi phí ăn ở, đi lại trong hạn mức bạn đề ra.</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -106,33 +120,39 @@ export default function Home() {
       </section>
 
       {/* Feature Section 02 - Principles */}
-      <section id="phuong-phap" className="scroll-mt-10 bg-white py-16 border-y border-slate-200/80 lg:py-24">
+      <section id="phuong-phap" className="scroll-mt-10 bg-white py-20 border-y border-slate-200/80 lg:py-28">
         <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12">
           <div className="mx-auto max-w-2xl text-center">
-            <span className="text-xs font-bold uppercase tracking-wider text-sky-600">02 / Phương pháp thiết kế</span>
-            <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+            <div className="inline-flex items-center gap-2.5 rounded-full border border-[#0052FF]/30 bg-[#0052FF]/5 px-4 py-1 font-mono text-xs uppercase tracking-[0.15em] text-[#0052FF]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#0052FF]" />
+              <span>02 // Phương pháp thiết kế</span>
+            </div>
+
+            <h2 className="mt-4 font-display text-3xl sm:text-4xl font-normal tracking-tight text-slate-900">
               Từ ý tưởng tới kế hoạch thực tế
             </h2>
-            <p className="mt-3 text-sm text-slate-600">
-              3 nguyên tắc giúp mọi hành trình du lịch diễn ra suôn sẻ và đáng nhớ.
+
+            <p className="mt-3 text-sm text-slate-600 font-sans">
+              3 nguyên tắc giúp mọi hành trình du lịch diễn ra suôn sẻ và trọn vẹn nhất.
             </p>
           </div>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
             {principles.map((principle) => (
               <article
                 key={principle.number}
-                className="travel-card flex flex-col justify-between rounded-3xl bg-white p-7 border border-slate-200"
+                className="travel-card group flex flex-col justify-between rounded-3xl bg-white p-8 border border-slate-200"
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <span className="grid h-10 w-10 place-items-center rounded-2xl bg-sky-100 text-xl">
+                    <span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-[#0052FF] to-[#4D7CFF] text-xl text-white shadow-accent group-hover:scale-110 transition-transform">
                       {principle.icon}
                     </span>
-                    <span className="text-xs font-bold text-sky-600">{principle.number}</span>
+                    <span className="font-mono text-xs font-bold text-[#0052FF] tracking-widest">{principle.number}</span>
                   </div>
-                  <h3 className="mt-6 text-xl font-bold text-slate-900">{principle.title}</h3>
-                  <p className="mt-3 text-xs leading-relaxed text-slate-600">{principle.detail}</p>
+
+                  <h3 className="mt-6 text-xl font-bold text-slate-900 font-sans group-hover:text-[#0052FF] transition-colors">{principle.title}</h3>
+                  <p className="mt-3 text-xs leading-relaxed text-slate-600 font-sans">{principle.detail}</p>
                 </div>
               </article>
             ))}
@@ -140,27 +160,34 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Call to Action Section */}
-      <section id="nguyen-tac" className="py-16 lg:py-24">
-        <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12">
-          <div className="hero-gradient rounded-3xl p-8 sm:p-12 text-white shadow-xl shadow-sky-500/20 flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+      {/* Call to Action Section (Inverted Contrast Dark Section) */}
+      <section id="nguyen-tac" className="relative overflow-hidden bg-[#0F172A] py-20 lg:py-28 text-white">
+        {/* Texture & Ambient Glows */}
+        <div className="absolute inset-0 dot-pattern opacity-30 pointer-events-none" />
+        <div className="absolute bottom-0 right-0 h-[400px] w-[400px] rounded-full bg-[#0052FF]/20 blur-[140px] pointer-events-none" />
+
+        <div className="relative mx-auto max-w-6xl px-5 sm:px-8 lg:px-12">
+          <div className="rounded-3xl border border-slate-800 bg-slate-900/90 p-8 sm:p-14 shadow-2xl backdrop-blur-md flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
             <div className="max-w-2xl">
-              <span className="inline-block rounded-full bg-white/20 px-3.5 py-1 text-xs font-bold text-white backdrop-blur-md">
-                Bắt đầu hành trình của bạn
-              </span>
-              <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
+              <div className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-800 px-3.5 py-1 font-mono text-xs uppercase tracking-wider text-slate-300">
+                <span>⚡ Bắt đầu hành trình</span>
+              </div>
+
+              <h2 className="mt-4 font-display text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-white leading-tight">
                 Sẵn sàng cho chuyến đi tiếp theo?
               </h2>
-              <p className="mt-3 text-sm text-white/90 leading-relaxed">
-                Tạo lịch trình du lịch ngay bây giờ hoặc khám phá hàng trăm kế hoạch tuyệt vời từ cộng đồng.
+
+              <p className="mt-3 text-sm text-slate-400 leading-relaxed font-sans">
+                Tạo lịch trình du lịch cá nhân hoá ngay bây giờ hoặc khám phá hàng trăm kế hoạch tuyệt vời từ cộng đồng.
               </p>
             </div>
+
             <a
               href="#main-content"
-              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-2xl bg-white px-7 py-4 text-sm font-bold text-sky-600 shadow-md hover:bg-sky-50 active:scale-98 transition-all"
+              className="inline-flex shrink-0 items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] px-8 py-4 text-sm font-bold text-white shadow-accent hover:shadow-accent-lg hover:-translate-y-0.5 active:scale-[0.98] transition-all"
             >
               <span>Lên Kế Hoạch Ngay</span>
-              <span aria-hidden="true">→</span>
+              <span aria-hidden="true" className="text-base">→</span>
             </a>
           </div>
         </div>

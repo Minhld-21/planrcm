@@ -84,46 +84,52 @@ export function HomeHero() {
   }
 
   return (
-    <section className="relative bg-gradient-to-b from-sky-50 via-white to-sky-50/50 pt-10 pb-16 lg:pt-16 lg:pb-24">
-      {/* Decorative background glow */}
+    <section className="relative bg-[#FAFAFA] pt-12 pb-20 lg:pt-20 lg:pb-28">
+      {/* Decorative ambient background glows */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="absolute top-0 left-1/2 h-[450px] w-[800px] -translate-x-1/2 rounded-full bg-sky-200/40 blur-3xl" />
+        <div className="absolute top-[-100px] left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-gradient-to-tr from-[#0052FF]/15 to-[#4D7CFF]/10 blur-[130px]" />
+        <div className="absolute top-[200px] right-[-100px] h-[350px] w-[350px] rounded-full bg-[#0052FF]/5 blur-[100px]" />
       </div>
 
       <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex items-center gap-2 rounded-full bg-sky-100 px-4 py-1.5 text-xs font-bold text-sky-700 shadow-sm border border-sky-200">
-            <span>✨ Trợ Lý Lập Kế Hoạch Du Lịch AI</span>
-          </span>
+          {/* Section Pill Badge */}
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-[#0052FF]/25 bg-[#0052FF]/5 px-4.5 py-1.5 font-mono text-xs font-medium uppercase tracking-[0.15em] text-[#0052FF] shadow-sm">
+            <span className="h-2 w-2 rounded-full bg-[#0052FF] animate-pulse-dot" />
+            <span>Trợ Lý Lập Kế Hoạch AI</span>
+          </div>
 
-          <h1 className="mt-6 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+          {/* Hero Display Headline */}
+          <h1 className="mt-6 font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-slate-900 leading-[1.12]">
             Đi thông minh. <br className="hidden sm:inline" />
-            <span className="hero-gradient-text">Trải nghiệm đúng nhịp.</span>
+            <span className="gradient-text font-display">Trải nghiệm đúng nhịp.</span>
           </h1>
 
-          <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
-            Tự động lập lịch trình du lịch tối ưu thời gian, ngân sách và sở thích cá nhân chỉ trong vài giây.
+          <p className="mt-5 text-base sm:text-lg leading-relaxed text-slate-600 font-sans max-w-2xl mx-auto">
+            Tự động thiết kế lịch trình du lịch tối ưu thời gian, ngân sách và trải nghiệm cá nhân hoá chỉ trong vài giây.
           </p>
         </div>
 
-        {/* Travel Search Panel Console */}
+        {/* Travel Search Console Card */}
         <form
           onSubmit={planForDestination}
-          className="mt-10 rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-900/5 sm:p-8"
+          className="mt-12 rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xl shadow-slate-900/5 sm:p-8 relative z-20"
           aria-labelledby="destination-heading"
         >
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-5">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-sky-600">01 / Điểm đến của bạn</span>
+              <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#0052FF]">
+                01 // Điểm đến của bạn
+              </span>
               <h2
                 id="destination-heading"
-                className="mt-1 text-2xl font-bold text-slate-900"
+                className="mt-1 text-2xl font-bold tracking-tight text-slate-900 font-sans"
               >
-                Bạn muốn đi đâu?
+                Bạn muốn khám phá đâu?
               </h2>
             </div>
-            <p className="text-xs text-slate-500 max-w-xs">
-              Nhập tên thành phố, tỉnh hoặc địa danh cụ thể để AI thiết kế lịch trình riêng cho bạn.
+            <p className="text-xs text-slate-500 max-w-xs font-sans">
+              Nhập tên tỉnh, thành phố hoặc danh thắng để AI thiết kế kế hoạch chi tiết.
             </p>
           </div>
 
@@ -138,12 +144,12 @@ export function HomeHero() {
               onSelect={setSelectedPlace}
               label="Điểm đến"
               placeholder="Nhập tỉnh, thành phố (VD: Đà Lạt, Phú Quốc)..."
-              className="min-w-0 z-30"
-              inputClassName="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-5 py-3.5 text-base font-medium text-slate-900 placeholder:text-slate-400 focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-sky-100 transition-all"
+              className="min-w-0 z-30 relative"
+              inputClassName="w-full rounded-2xl border border-slate-200 bg-slate-50/60 px-5 py-3.5 text-base font-medium text-slate-900 placeholder:text-slate-400 focus:border-[#0052FF] focus:bg-white focus:outline-none focus:ring-4 focus:ring-[#0052FF]/15 transition-all"
             />
 
-            <div className="flex flex-col justify-center rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-2.5">
-              <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+            <div className="flex flex-col justify-center rounded-2xl border border-slate-200 bg-slate-50/60 px-4 py-2.5 focus-within:border-[#0052FF] focus-within:bg-white transition-all">
+              <label className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-500">
                 Thời gian
               </label>
               <select
@@ -159,8 +165,8 @@ export function HomeHero() {
               </select>
             </div>
 
-            <div className="flex flex-col justify-center rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-2.5">
-              <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+            <div className="flex flex-col justify-center rounded-2xl border border-slate-200 bg-slate-50/60 px-4 py-2.5 focus-within:border-[#0052FF] focus-within:bg-white transition-all">
+              <label className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-500">
                 Ngân sách dự kiến
               </label>
               <select
@@ -179,7 +185,7 @@ export function HomeHero() {
 
             <button
               type="submit"
-              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-sky-500 px-7 py-3.5 text-base font-bold text-white shadow-lg shadow-sky-500/25 hover:bg-sky-600 active:scale-98 transition-all"
+              className="inline-flex items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] px-7 py-3.5 text-base font-bold text-white shadow-accent hover:shadow-accent-lg hover:-translate-y-0.5 active:scale-[0.98] transition-all"
             >
               <span>Tạo Lịch Trình</span>
               <span className="text-lg" aria-hidden="true">
@@ -188,15 +194,15 @@ export function HomeHero() {
             </button>
           </div>
 
-          <div className="mt-6 flex flex-col gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:items-center sm:justify-between text-xs">
+          <div className="mt-6 flex flex-col gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:items-center sm:justify-between text-xs font-sans">
             <span className="text-slate-500 font-medium">
-              Hoặc để AI tìm ý tưởng chuyến đi quanh vị trí của bạn:
+              Hoặc để AI tự đề xuất chuyến đi từ vị trí của bạn:
             </span>
             <button
               type="button"
               onClick={requestLocation}
               disabled={isRequesting}
-              className="inline-flex items-center gap-1.5 font-bold text-sky-600 hover:text-sky-700 transition-colors disabled:opacity-60"
+              className="inline-flex items-center gap-1.5 font-bold text-[#0052FF] hover:text-[#4D7CFF] transition-colors disabled:opacity-60"
             >
               <span>📍 {isRequesting ? "Đang lấy vị trí..." : "Dùng vị trí hiện tại"}</span>
               <span aria-hidden="true">→</span>
@@ -204,10 +210,10 @@ export function HomeHero() {
           </div>
         </form>
 
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between text-xs text-slate-500">
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between text-xs text-slate-500 font-sans">
           {!user && status !== "loading" ? (
-            <p className="rounded-xl bg-amber-50 px-4 py-2 text-amber-800 border border-amber-200">
-              ⚡ <strong>Chế độ khách:</strong> Lịch trình xem thử. Hãy đăng nhập Google để lưu & chỉnh sửa chuyến đi riêng của bạn.
+            <p className="rounded-xl bg-amber-50/80 px-4 py-2 text-amber-900 border border-amber-200/80">
+              ⚡ <strong>Chế độ xem thử:</strong> Hãy đăng nhập Google để lưu & tùy chỉnh lịch trình chuyến đi riêng của bạn.
             </p>
           ) : (
             <span />
@@ -229,7 +235,7 @@ export function HomeHero() {
       {(locationError || authError) && (
         <div
           role="alert"
-          className="fixed right-5 bottom-5 z-50 flex max-w-sm items-center justify-between gap-4 rounded-2xl bg-slate-900 px-5 py-4 text-xs font-semibold text-white shadow-2xl"
+          className="fixed right-5 bottom-5 z-50 flex max-w-sm items-center justify-between gap-4 rounded-2xl bg-[#0F172A] px-5 py-4 text-xs font-semibold text-white shadow-2xl border border-slate-800"
         >
           <span>{locationError ?? authError}</span>
           <button
