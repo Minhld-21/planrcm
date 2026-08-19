@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function ItineraryPage() {
   return (
-    <main id="main-content" className="bg-[#F8FBFD] py-6 text-slate-900 min-h-screen">
+    <main id="main-content" className="organic-page py-8 sm:py-12">
       <div className="mx-auto max-w-6xl px-4 sm:px-8 lg:px-12">
         <ItineraryWorkspace />
       </div>

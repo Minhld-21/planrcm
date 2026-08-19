@@ -3,8 +3,7 @@ import { HomeHero } from '@/components/home-hero'
 
 export const metadata: Metadata = {
   title: 'Lập lịch trình du lịch thông minh với AI',
-  description:
-    'Nhận lịch trình du lịch tối ưu, phù hợp với thời gian và ngân sách của bạn với trợ lý AI PlanRCM.',
+  description: 'Nhận lịch trình du lịch tối ưu, phù hợp với thời gian và ngân sách của bạn với trợ lý AI PlanRCM.',
   alternates: { canonical: '/' },
   openGraph: {
     title: 'PlanRCM | Lập lịch trình du lịch với AI',
@@ -13,6 +12,27 @@ export const metadata: Metadata = {
     type: 'website',
   },
 }
+
+const principles = [
+  {
+    icon: '⌖',
+    title: 'Bắt đầu từ một nơi chốn',
+    detail: 'Chọn thành phố, hòn đảo hay góc quen bạn muốn ghé. PlanRCM biến mong muốn đó thành một khởi đầu rõ ràng.',
+    shape: 'rounded-[2.5rem_1.5rem_2.5rem_1.5rem]',
+  },
+  {
+    icon: '◌',
+    title: 'Chọn nhịp điệu của riêng bạn',
+    detail: 'Ăn ngon, chụp ảnh, hay thong thả nghỉ ngơi — mỗi hành trình được điều chỉnh theo điều bạn thật sự muốn làm.',
+    shape: 'rounded-[1.5rem_2.75rem_1.5rem_2.75rem]',
+  },
+  {
+    icon: '↝',
+    title: 'Mang theo một kế hoạch dễ sống',
+    detail: 'Mỗi chặng đều có thời gian, địa điểm và lý do hợp lý để bạn có thể theo hoặc chỉnh lại ngay trên đường đi.',
+    shape: 'rounded-[2.75rem_2rem_1.5rem_2.5rem]',
+  },
+]
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -24,135 +44,64 @@ const structuredData = {
   description: 'Ứng dụng AI hỗ trợ tạo lịch trình du lịch thông minh.',
 }
 
-const principles = [
-  {
-    number: '01',
-    icon: '🎯',
-    title: 'Từ điểm đến mơ ước',
-    detail: 'Chọn thành phố hoặc nơi bạn sắp đến để nhận kế hoạch hoàn chỉnh ngay trước ngày khởi hành.',
-  },
-  {
-    number: '02',
-    icon: '☕',
-    title: 'Theo nhịp cá nhân',
-    detail: 'Lựa chọn trải nghiệm ẩm thực, check-in hoặc thư giãn nhịp độ chậm tùy theo ý thích.',
-  },
-  {
-    number: '03',
-    icon: '📅',
-    title: 'Chi tiết theo thời gian',
-    detail: 'Mỗi mốc lịch trình đều có thời gian, vị trí và gợi ý cụ thể để bạn dễ dàng tùy chỉnh.',
-  },
-]
-
 export default function Home() {
   return (
-    <main id="main-content" className="bg-[#FAFAFA] text-slate-900 font-sans">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
-      
-      {/* Hero Section */}
-      <div className="relative z-20">
-        <HomeHero />
-      </div>
+    <main id="main-content" className="organic-page">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      <HomeHero />
 
-      {/* Feature Section 01 - Direction & Intelligence */}
-      <section id="tao-ke-hoach" className="scroll-mt-10 py-20 lg:py-28">
-        <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12">
-          <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
-            <div className="lg:col-span-5">
-              <div className="inline-flex items-center gap-2.5 rounded-full border border-[#0052FF]/30 bg-[#0052FF]/5 px-4 py-1 font-mono text-xs uppercase tracking-[0.15em] text-[#0052FF]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#0052FF]" />
-                <span>01 // Định hướng chuyến đi</span>
-              </div>
+      <section id="tao-ke-hoach" className="scroll-mt-24 px-5 py-20 sm:px-8 sm:py-28 lg:px-12 lg:py-32">
+        <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[minmax(0,.86fr)_minmax(0,1.14fr)] lg:items-center lg:gap-20">
+          <div>
+            <span className="organic-kicker">Một kế hoạch có chỗ để thở</span>
+            <h2 className="mt-5 max-w-lg font-display text-4xl font-bold leading-[1.02] tracking-[-0.04em] text-slate-900 sm:text-5xl">
+              Bớt phải lo tính. Thêm thời gian để đi.
+            </h2>
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-600">
+              PlanRCM sắp xếp các điểm dừng theo một hành trình hợp lý, để chuyến đi không bị lấp đầy bởi những việc phải tự ghép nối.
+            </p>
+            <a href="#main-content" className="organic-secondary mt-7 text-sm">Chọn điểm đến của bạn ↑</a>
+          </div>
 
-              <h2 className="mt-4 font-display text-3xl sm:text-4xl font-normal tracking-tight text-slate-900 leading-tight">
-                Bắt đầu từ nơi bạn muốn đến.
-              </h2>
-              
-              <p className="mt-4 text-base leading-relaxed text-slate-600">
-                Nhập thành phố hoặc danh thắng bạn dự định khám phá. Trợ lý AI PlanRCM sẽ tự động phân tích vị trí và lên lịch trình di chuyển hợp lý nhất cho chuyến đi của bạn.
-              </p>
-
-              <div className="mt-7">
-                <a
-                  href="#main-content"
-                  className="inline-flex items-center gap-2 text-sm font-bold text-[#0052FF] hover:text-[#4D7CFF] transition-colors group"
-                >
-                  <span>Chọn điểm đến ở đầu trang</span>
-                  <span className="group-hover:-translate-y-0.5 transition-transform">↑</span>
-                </a>
-              </div>
+          <div className="organic-card relative overflow-hidden p-6 sm:p-9">
+            <div className="absolute -right-14 -top-14 h-48 w-48 rounded-[30%_70%_70%_30%_/_30%_30%_70%_70%] bg-sky-100" />
+            <div className="relative border-b border-slate-200 pb-6">
+              <p className="text-xs font-extrabold tracking-[0.04em] text-sky-700">HÀNH TRÌNH ĐƯỢC SẮP THEO BẠN</p>
+              <h3 className="mt-2 font-display text-3xl font-bold text-slate-900">Từ ý định đến từng điểm dừng.</h3>
             </div>
-
-            <div className="lg:col-span-7">
-              {/* Feature card with gradient border stroke effect */}
-              <div className="gradient-border-card shadow-lg shadow-slate-900/5">
-                <div className="gradient-border-inner p-8 sm:p-10">
-                  <div className="flex items-center gap-4 border-b border-slate-100 pb-6">
-                    <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-[#0052FF] to-[#4D7CFF] text-2xl text-white shadow-accent">
-                      🏔️
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-slate-900 font-sans">Trải nghiệm du lịch thông minh</h3>
-                      <p className="text-xs text-slate-500 font-sans">Tự động hoá tối đa quy trình lập kế hoạch</p>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                    <div className="rounded-2xl bg-slate-50 p-4.5 border border-slate-200/80 hover:border-[#0052FF]/30 transition-colors">
-                      <span className="text-xs font-bold text-[#0052FF] font-sans">📍 Đúng tọa độ địa lý</span>
-                      <p className="mt-1.5 text-xs text-slate-600 leading-relaxed font-sans">Các điểm dừng chân được sắp xếp tối ưu theo khoảng cách thực tế.</p>
-                    </div>
-
-                    <div className="rounded-2xl bg-slate-50 p-4.5 border border-slate-200/80 hover:border-[#0052FF]/30 transition-colors">
-                      <span className="text-xs font-bold text-[#0052FF] font-sans">💰 Dự toán ngân sách</span>
-                      <p className="mt-1.5 text-xs text-slate-600 leading-relaxed font-sans">Kiểm soát và tối ưu chi phí ăn ở, đi lại trong hạn mức bạn đề ra.</p>
-                    </div>
-                  </div>
-                </div>
+            <div className="relative mt-6 grid gap-4 sm:grid-cols-2">
+              <div className="rounded-[2rem_1.25rem_2rem_1.25rem] bg-sky-50 p-5">
+                <span className="text-xl" aria-hidden="true">⌖</span>
+                <p className="mt-3 font-bold text-slate-900">Đúng tuyến đường</p>
+                <p className="mt-1 text-xs leading-relaxed text-slate-600">Điểm dừng được sắp xếp theo vị trí thực tế, không phải ngẫu nhiên.</p>
+              </div>
+              <div className="rounded-[1.25rem_2rem_1.25rem_2rem] bg-amber-50 p-5">
+                <span className="text-xl" aria-hidden="true">◒</span>
+                <p className="mt-3 font-bold text-slate-900">Đúng mức chi</p>
+                <p className="mt-1 text-xs leading-relaxed text-slate-600">Bạn biết trước khoảng chi phí để yên tâm tận hưởng chuyến đi.</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Feature Section 02 - Principles */}
-      <section id="phuong-phap" className="scroll-mt-10 bg-white py-20 border-y border-slate-200/80 lg:py-28">
-        <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12">
-          <div className="mx-auto max-w-2xl text-center">
-            <div className="inline-flex items-center gap-2.5 rounded-full border border-[#0052FF]/30 bg-[#0052FF]/5 px-4 py-1 font-mono text-xs uppercase tracking-[0.15em] text-[#0052FF]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#0052FF]" />
-              <span>02 // Phương pháp thiết kế</span>
-            </div>
-
-            <h2 className="mt-4 font-display text-3xl sm:text-4xl font-normal tracking-tight text-slate-900">
-              Từ ý tưởng tới kế hoạch thực tế
-            </h2>
-
-            <p className="mt-3 text-sm text-slate-600 font-sans">
-              3 nguyên tắc giúp mọi hành trình du lịch diễn ra suôn sẻ và trọn vẹn nhất.
-            </p>
+      <section id="phuong-phap" className="scroll-mt-24 bg-[var(--color-paper-deep)]/70 px-5 py-20 sm:px-8 sm:py-28 lg:px-12 lg:py-32">
+        <div className="mx-auto max-w-6xl">
+          <div className="max-w-2xl">
+            <span className="organic-kicker">Một hành trình, ba điều quan trọng</span>
+            <h2 className="mt-5 font-display text-4xl font-bold leading-[1.02] tracking-[-0.04em] text-slate-900 sm:text-5xl">Đi xa vẫn thấy nhẹ nhàng.</h2>
           </div>
 
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
-            {principles.map((principle) => (
-              <article
-                key={principle.number}
-                className="travel-card group flex flex-col justify-between rounded-3xl bg-white p-8 border border-slate-200"
-              >
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            {principles.map((principle, index) => (
+              <article key={principle.title} className={`travel-card group flex min-h-72 flex-col justify-between p-7 sm:p-8 ${principle.shape} ${index === 1 ? 'md:translate-y-8' : ''}`}>
+                <div className="flex items-start justify-between gap-5">
+                  <span className="grid h-14 w-14 place-items-center rounded-[1.25rem] bg-sky-50 text-2xl text-sky-700 transition-colors group-hover:bg-sky-500 group-hover:text-white" aria-hidden="true">{principle.icon}</span>
+                  <span className="font-display text-2xl font-bold text-amber-800/70">0{index + 1}</span>
+                </div>
                 <div>
-                  <div className="flex items-center justify-between">
-                    <span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-[#0052FF] to-[#4D7CFF] text-xl text-white shadow-accent group-hover:scale-110 transition-transform">
-                      {principle.icon}
-                    </span>
-                    <span className="font-mono text-xs font-bold text-[#0052FF] tracking-widest">{principle.number}</span>
-                  </div>
-
-                  <h3 className="mt-6 text-xl font-bold text-slate-900 font-sans group-hover:text-[#0052FF] transition-colors">{principle.title}</h3>
-                  <p className="mt-3 text-xs leading-relaxed text-slate-600 font-sans">{principle.detail}</p>
+                  <h3 className="font-display text-2xl font-bold leading-tight text-slate-900">{principle.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-600">{principle.detail}</p>
                 </div>
               </article>
             ))}
@@ -160,36 +109,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Call to Action Section (Inverted Contrast Dark Section) */}
-      <section id="nguyen-tac" className="relative overflow-hidden bg-[#0F172A] py-20 lg:py-28 text-white">
-        {/* Texture & Ambient Glows */}
-        <div className="absolute inset-0 dot-pattern opacity-30 pointer-events-none" />
-        <div className="absolute bottom-0 right-0 h-[400px] w-[400px] rounded-full bg-[#0052FF]/20 blur-[140px] pointer-events-none" />
-
-        <div className="relative mx-auto max-w-6xl px-5 sm:px-8 lg:px-12">
-          <div className="rounded-3xl border border-slate-800 bg-slate-900/90 p-8 sm:p-14 shadow-2xl backdrop-blur-md flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-            <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-800 px-3.5 py-1 font-mono text-xs uppercase tracking-wider text-slate-300">
-                <span>⚡ Bắt đầu hành trình</span>
-              </div>
-
-              <h2 className="mt-4 font-display text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-white leading-tight">
-                Sẵn sàng cho chuyến đi tiếp theo?
-              </h2>
-
-              <p className="mt-3 text-sm text-slate-400 leading-relaxed font-sans">
-                Tạo lịch trình du lịch cá nhân hoá ngay bây giờ hoặc khám phá hàng trăm kế hoạch tuyệt vời từ cộng đồng.
-              </p>
-            </div>
-
-            <a
-              href="#main-content"
-              className="inline-flex shrink-0 items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] px-8 py-4 text-sm font-bold text-white shadow-accent hover:shadow-accent-lg hover:-translate-y-0.5 active:scale-[0.98] transition-all"
-            >
-              <span>Lên Kế Hoạch Ngay</span>
-              <span aria-hidden="true" className="text-base">→</span>
-            </a>
+      <section id="nguyen-tac" className="relative overflow-hidden bg-sky-700 px-5 py-20 text-[var(--color-on-moss)] sm:px-8 sm:py-28 lg:px-12 lg:py-32">
+        <div className="absolute inset-0 dot-pattern opacity-35" />
+        <div className="absolute -bottom-24 right-0 h-80 w-80 rounded-[60%_40%_30%_70%_/_60%_30%_70%_40%] bg-amber-100/15 blur-3xl" />
+        <div className="relative mx-auto grid max-w-5xl gap-10 rounded-[3rem_1.75rem_3rem_1.75rem] border border-white/15 bg-white/7 p-8 backdrop-blur-sm sm:p-12 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+          <div className="max-w-2xl">
+            <span className="inline-flex rounded-full border border-white/25 px-3 py-1.5 text-xs font-bold text-white/80">Chuyến đi tiếp theo đang chờ</span>
+            <h2 className="mt-5 font-display text-4xl font-bold leading-[1.02] tracking-[-0.04em] sm:text-5xl">Để AI lo phần sắp xếp.</h2>
+            <p className="mt-4 text-base leading-relaxed text-white/75">Bạn chỉ cần giữ lại phần quan trọng nhất: sự háo hức được lên đường.</p>
           </div>
+          <a href="#main-content" className="inline-flex min-h-12 items-center justify-center whitespace-nowrap rounded-full bg-[var(--color-on-moss)] px-6 text-sm font-extrabold text-sky-700 transition-transform hover:scale-105 active:scale-95">Tạo một hành trình →</a>
         </div>
       </section>
     </main>

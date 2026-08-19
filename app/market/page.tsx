@@ -20,7 +20,7 @@ export default async function MarketPage() {
   const initialPlans = await getMarketPlansForServer()
 
   return (
-    <main id="main-content" className="bg-[#F8FBFD] text-slate-900 min-h-screen">
+    <main id="main-content" className="organic-page">
       <div className="mx-auto max-w-6xl px-4 py-8 sm:px-8 sm:py-12 lg:px-12">
         <MarketPlanFeed initialPlans={initialPlans} />
       </div>

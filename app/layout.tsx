@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Calistoga, Inter, JetBrains_Mono } from 'next/font/google'
+import { Fraunces, JetBrains_Mono, Nunito } from 'next/font/google'
 import type { ReactNode } from 'react'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteHeader } from '@/components/site-header'
@@ -8,16 +8,16 @@ import { LocationProvider } from '@/context/location-context'
 import { siteUrl } from '@/lib/site'
 import './globals.css'
 
-const calistoga = Calistoga({
+const fraunces = Fraunces({
   subsets: ['latin'],
-  variable: '--font-display',
+  variable: '--font-fraunces',
   display: 'swap',
-  weight: ['400'],
+  weight: ['600', '700', '800'],
 })
 
-const inter = Inter({
+const nunito = Nunito({
   subsets: ['latin', 'vietnamese'],
-  variable: '--font-sans',
+  variable: '--font-nunito',
   display: 'swap',
   weight: ['400', '500', '600', '700'],
 })
@@ -42,11 +42,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="vi" className={`${calistoga.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
-      <body className="font-sans antialiased bg-[#FAFAFA] text-[#0F172A] min-h-screen flex flex-col selection:bg-[#0052FF] selection:text-white">
+    <html lang="vi" className={`${fraunces.variable} ${nunito.variable} ${jetbrainsMono.variable}`}>
+      <body className="font-sans antialiased min-h-screen flex flex-col selection:bg-[var(--color-moss)] selection:text-[var(--color-on-moss)]">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-sky-600 focus:text-white focus:rounded-xl focus:shadow-lg"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[70] focus:px-4 focus:py-2 focus:bg-[var(--color-moss)] focus:text-[var(--color-on-moss)] focus:rounded-full focus:shadow-lg"
         >
           Bỏ qua điều hướng
         </a>

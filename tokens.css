@@ -1,0 +1,62 @@
+/* Hallmark · pre-emit critique: P5 H5 E4 S5 R4 V5
+ * genre: playful · tone: organic and grounded · anchor hue: moss green
+ * macrostructure: Narrative Workflow (marketing) + Workbench (app) · nav: N5 Floating pill · footer: Ft5 Statement
+ * contrast: pass (40–41) · honest: pass (46) · chrome: pass (47) · responsive: pass (34, 49–52)
+ */
+
+:root {
+  --color-paper: oklch(98.7% 0.008 85);
+  --color-paper-deep: oklch(94.2% 0.019 77);
+  --color-surface: oklch(99.4% 0.006 88);
+  --color-surface-translucent: oklch(99.4% 0.006 88 / 78%);
+  --color-ink: oklch(27.2% 0.016 95);
+  --color-ink-soft: oklch(45.8% 0.022 96);
+  --color-muted: oklch(59.4% 0.018 96);
+  --color-rule: oklch(87.4% 0.017 79);
+  --color-moss: oklch(49.8% 0.046 132);
+  --color-moss-deep: oklch(40.6% 0.041 132);
+  --color-moss-pale: oklch(93.7% 0.025 130);
+  --color-clay: oklch(66.3% 0.09 58);
+  --color-clay-deep: oklch(54.9% 0.09 52);
+  --color-clay-pale: oklch(92.6% 0.036 68);
+  --color-sage: oklch(85.8% 0.042 124);
+  --color-alert: oklch(53.3% 0.101 29);
+  --color-alert-pale: oklch(95.1% 0.024 26);
+  --color-focus: oklch(44.5% 0.079 137);
+  --color-on-moss: oklch(97.2% 0.008 86);
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-nunito), ui-rounded, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
+
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4.5rem;
+  --space-3xl: 7rem;
+
+  --text-display: clamp(3.25rem, 6vw, 5.9rem);
+  --text-display-s: clamp(2.6rem, 5vw, 4.8rem);
+  --text-2xl: 2.25rem;
+  --text-xl: 1.75rem;
+  --text-lg: 1.375rem;
+  --text-md: 1.125rem;
+
+  --radius-card: 2rem;
+  --radius-card-asymmetric: 2.5rem 1.5rem 2.25rem 1.75rem;
+  --radius-input: 999px;
+  --radius-pill: 999px;
+  --rule-soft: 1px solid var(--color-rule);
+  --shadow-soft: 0 4px 20px -2px oklch(49.8% 0.046 132 / 15%);
+  --shadow-float: 0 18px 45px -18px oklch(66.3% 0.09 58 / 27%);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-short: 180ms;
+  --dur-base: 300ms;
+  --dur-slow: 500ms;
+}
